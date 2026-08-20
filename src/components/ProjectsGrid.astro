@@ -1,0 +1,89 @@
+---
+import { projects, categories } from "../data/projects.js";
+import ProjectCard from "./ProjectCard.astro";
+---
+
+<section class="work section" id="trabajo">
+  <div class="container">
+    <p class="eyebrow">Trabajo</p>
+    <h2 class="work__title">Proyectos</h2>
+
+    <div class="work__filters" role="tablist" aria-label="Filtrar proyectos por categoría">
+      {categories.map((cat, i) => (
+        <button
+          class="filter-btn"
+          class:list={[{ "is-active": i === 0 }]}
+          data-filter={cat.id}
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <div class="work__grid" id="work-grid">
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .work__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    font-family: var(--font-body);
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    color: var(--text);
+  }
+
+  .filter-btn.is-active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const cards = document.querySelectorAll<HTMLElement>("#work-grid .card");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+
+      const filter = btn.dataset.filter;
+      cards.forEach((card) => {
+        const show = filter === "todos" || card.dataset.category === filter;
+        (card as HTMLElement).style.display = show ? "" : "none";
+      });
+    });
+  });
+</script>

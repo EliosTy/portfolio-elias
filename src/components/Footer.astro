@@ -1,0 +1,20 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <span>© {year} Elias</span>
+    <span>Hecho con Astro</span>
+  </div>
+</footer>
+
+<style>
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 28px 0;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+</style>

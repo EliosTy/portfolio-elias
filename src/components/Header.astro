@@ -1,0 +1,60 @@
+---
+const links = [
+  { href: "#trabajo", label: "Trabajo" },
+  { href: "#sobre-mi", label: "Sobre mí" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="#" class="header__logo">Elias</a>
+    <nav class="header__nav">
+      {links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .header__logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .header__nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  .header__nav a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .header__nav a:hover {
+    color: var(--text);
+  }
+</style>

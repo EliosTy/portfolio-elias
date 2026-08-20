@@ -1,0 +1,138 @@
+/* ============================================================================
+   SISTEMA DE TEMA
+   ============================================================================
+   Todo el color y la tipografía del sitio sale de estas variables. Para
+   probar otra variante de estilo, cambiá el atributo data-theme en
+   src/layouts/BaseLayout.astro (línea del <html data-theme="...">) por uno
+   de estos 3 valores:
+
+     "oscuro-minimal"   -> default. Fondo oscuro, foco total en el trabajo.
+     "editorial-claro"  -> fondo claro, tipografía grande tipo editorial.
+     "vibrante-motion"  -> fondo oscuro con acentos de color fuertes,
+                            pensado para lucir motion graphics.
+   ========================================================================= */
+
+:root,
+[data-theme="oscuro-minimal"] {
+  --bg: #0b0b0d;
+  --bg-elevated: #151517;
+  --text: #f2f2f0;
+  --text-muted: #9a9a9e;
+  --accent: #e8e6de;
+  --accent-2: #6f6f76;
+  --border: #26262a;
+  --font-display: "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="editorial-claro"] {
+  --bg: #f7f5f0;
+  --bg-elevated: #ffffff;
+  --text: #17171a;
+  --text-muted: #666460;
+  --accent: #b23b21;
+  --accent-2: #17171a;
+  --border: #e2ded4;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="vibrante-motion"] {
+  --bg: #0a0014;
+  --bg-elevated: #150826;
+  --text: #f4f0ff;
+  --text-muted: #b3a4d6;
+  --accent: #ff3d6e;
+  --accent-2: #4dd0ff;
+  --border: #2a1a44;
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  background: var(--accent);
+  color: var(--bg);
+}

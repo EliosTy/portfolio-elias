@@ -1,0 +1,102 @@
+---
+const { project } = Astro.props;
+
+const categoryLabel = {
+  "diseño": "Diseño Gráfico",
+  "motion": "Motion Graphics",
+  "engi": "Engi · Personal",
+}[project.category];
+---
+
+<article class="card" data-category={project.category}>
+  <a href={project.link || "#"} class="card__media-link">
+    <div class="card__media">
+      <img src={project.image} alt={project.title} loading="lazy" />
+    </div>
+  </a>
+  <div class="card__body">
+    <div class="card__meta">
+      <span class="card__category">{categoryLabel}</span>
+      <span class="card__year">{project.year}</span>
+    </div>
+    <h3 class="card__title">{project.title}</h3>
+    <p class="card__description">{project.description}</p>
+    <ul class="card__tags">
+      {project.tags.map((tag: string) => <li>{tag}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card__media-link {
+    display: block;
+  }
+
+  .card__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover .card__media img {
+    transform: scale(1.04);
+  }
+
+  .card__body {
+    padding: 20px;
+  }
+
+  .card__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .card__title {
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+
+  .card__description {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card__tags li {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+  }
+</style>
