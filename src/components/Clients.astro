@@ -1,0 +1,112 @@
+---
+import { clients } from "../data/clients.js";
+---
+
+<section class="clients">
+  <div class="clients__noise" aria-hidden="true"></div>
+  <div class="container">
+    <p class="clients__label">Marcas y clientes con los que trabajé</p>
+    <div class="clients__grid">
+      {clients.map((client) => (
+        <div class="clients__logo">
+          {client.image ? (
+            <img src={client.image} alt={client.name || "Cliente"} loading="lazy" />
+          ) : (
+            <span>{client.name}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    position: relative;
+    overflow: hidden;
+    padding: 56px 0;
+    /* dos manchas radiales del verde de la paleta, una en cada esquina
+       opuesta (arriba a la izquierda / abajo a la derecha), más anchas y
+       corridas un 20% hacia afuera de su diagonal (el centro queda fuera
+       del recuadro) — así solo se ve el borde más suave de cada mancha y
+       no se nota un corte duro. El tono de verde oscuro intermedio suaviza
+       todavía más esa transición antes de llegar al negro. */
+    background:
+      radial-gradient(
+        circle 700px at -20% -20%,
+        color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 0%,
+        color-mix(in srgb, var(--accent-2) 22%, #000000) 55%,
+        transparent 100%
+      ),
+      radial-gradient(
+        circle 700px at 120% 120%,
+        color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 0%,
+        color-mix(in srgb, var(--accent-2) 22%, #000000) 55%,
+        transparent 100%
+      ),
+      #000000;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ruido sutil (12%) sobre el degradé, para que la transición de color
+     se vea más orgánica en vez de una superficie perfectamente lisa. */
+  .clients__noise {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  .clients .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .clients__label {
+    text-align: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .clients__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .clients__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 72px;
+    /* fondo levemente más oscuro que el verde de la sección, así cada
+       chip se distingue como tarjeta en vez de mezclarse con el fondo */
+    background: color-mix(in srgb, var(--bg) 55%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14px;
+    filter: grayscale(1);
+    opacity: 0.7;
+  }
+
+  .clients__logo img {
+    max-height: 44px;
+    max-width: 80%;
+  }
+
+  @media (max-width: 720px) {
+    .clients__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

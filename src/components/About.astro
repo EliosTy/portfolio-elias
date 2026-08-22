@@ -5,19 +5,25 @@
   <div class="container about__grid">
     <div>
       <p class="eyebrow">Sobre mí</p>
-      <h2 class="about__title">
-        <!-- TODO: escribí tu presentación real acá. -->
-        Diseñador gráfico y motion designer.
-      </h2>
+      <h2 class="about__title">Ty es "gracias".<br />Space es el espacio.</h2>
     </div>
     <div class="about__body">
       <p>
-        <!-- TODO: reemplazá por tu historia real: formación, años de
-        experiencia, tipo de proyectos/clientes, software que usás. -->
-        Cuento acá quién soy, cómo llegué al diseño y qué tipo de proyectos
-        me interesan. También puedo mencionar el software que uso
-        (Illustrator, Photoshop, After Effects, Figma, etc.) y algún dato que
-        me distinga.
+        <!-- TODO: este texto sale de tu "Quiénes somos" original de
+        TySpace, adaptado a primera persona. Ajustalo como quieras — es tu
+        historia. -->
+        Donde nace una idea, nace un sueño: uno que viaja por el inmenso
+        espacio de la mente buscando un lugar donde aterrizar y evolucionar.
+        <span class="highlight">TySpace</span> nació como la idea de un estudio,
+        un espacio donde varias mentes le daban vida a las ideas. Hoy lo
+        transformé en mi espacio propio: acá diseño, animo y muestro lo que
+        hago, tanto para clientes como por las simples ganas de crear.
+      </p>
+      <p>
+        Ty es la abreviatura de "gracias", y space es el espacio: el de
+        trabajo, el exterior, el que comparto con cada persona para la que
+        diseño. Por eso, más que un nombre, es un
+        <span class="highlight">gracias por el espacio</span>.
       </p>
       <ul class="about__tools">
         <li>Illustrator</li>
@@ -38,13 +44,21 @@
 
   .about__title {
     font-size: 28px;
-    max-width: 14ch;
+    max-width: 16ch;
   }
 
   .about__body p {
     font-size: 17px;
     color: var(--text-muted);
     max-width: 60ch;
+  }
+
+  .about__body p + p {
+    margin-top: 16px;
+  }
+
+  .highlight {
+    color: var(--accent-2);
   }
 
   .about__tools {

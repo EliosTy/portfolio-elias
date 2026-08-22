@@ -8,8 +8,13 @@
 
      "oscuro-minimal"   -> default. Fondo oscuro, foco total en el trabajo.
      "editorial-claro"  -> fondo claro, tipografía grande tipo editorial.
-     "vibrante-motion"  -> fondo oscuro con acentos de color fuertes,
-                            pensado para lucir motion graphics.
+     "vibrante-motion"  -> fondo azul noche + acentos azul (confianza) y
+                            naranja (creatividad). Pensado para lucir motion
+                            graphics sin perder seriedad profesional.
+     "tyspace"          -> el tema actual. Fondo espacio profundo (violeta
+                            casi negro) con un glow de nebulosa en el hero,
+                            acento violeta/magenta y verde lima (la paleta
+                            de tu marca TySpace).
    ========================================================================= */
 
 :root,
@@ -38,15 +43,37 @@
 }
 
 [data-theme="vibrante-motion"] {
-  --bg: #0a0014;
-  --bg-elevated: #150826;
-  --text: #f4f0ff;
-  --text-muted: #b3a4d6;
-  --accent: #ff3d6e;
-  --accent-2: #4dd0ff;
-  --border: #2a1a44;
+  --bg: #0a1128;
+  --bg-elevated: #131b3d;
+  --text: #f3f5fb;
+  --text-muted: #9aa3c7;
+  --accent: #3d8bff;
+  --accent-2: #ff6a3d;
+  --border: #232d57;
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="tyspace"] {
+  --bg: #0b0616;
+  --bg-elevated: #170f2c;
+  --text: #f5f2ff;
+  --text-muted: #b0a3d4;
+  --accent: #9d4dff;
+  --accent-2: #a6ff2e;
+  --border: #2a1f47;
+  --hero-bg: #3b1e5a;
+  --glow: radial-gradient(
+    circle at 50% 0%,
+    rgba(157, 77, 255, 0.55),
+    rgba(157, 77, 255, 0) 60%
+  );
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+:root {
+  --font-serif-italic: "Fraunces", Georgia, serif;
 }
 
 * {

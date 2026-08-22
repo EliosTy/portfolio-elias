@@ -3,11 +3,8 @@ import { projects, categories } from "../data/projects.js";
 import ProjectCard from "./ProjectCard.astro";
 ---
 
-<section class="work section" id="trabajo">
+<section class="work section">
   <div class="container">
-    <p class="eyebrow">Trabajo</p>
-    <h2 class="work__title">Proyectos</h2>
-
     <div class="work__filters" role="tablist" aria-label="Filtrar proyectos por categoría">
       {categories.map((cat, i) => (
         <button

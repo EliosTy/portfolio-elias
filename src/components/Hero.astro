@@ -1,48 +1,233 @@
 ---
+// orden de protagonismo: Photoshop > Illustrator > After Effects > Premiere
+// (tamaño y delay de la animación van bajando en ese orden). Los archivos
+// van en /public/images/icons/, 256x256px con fondo transparente.
+//
+// cada ícono tiene su propia duración, amplitud de movimiento, y un
+// pequeño "respiro" de escala/opacidad en el punto más alto — así no se
+// mueven todos igual ni sincronizados, se ve más orgánico.
+const tools = [
+  { label: "Photoshop", file: "photoshop.png", top: "5%", left: "60%", rotate: "-8deg", delay: "0s", size: 64, duration: "5.5s", amp: "16px", scalePeak: "1.05", opacityPeak: "0.9" },
+  { label: "DaVinci Resolve", file: "davinci.png", top: "10%", left: "88%", rotate: "5deg", delay: "0.9s", size: 40, duration: "6.8s", amp: "9px", scalePeak: "1.04", opacityPeak: "0.85" },
+  { label: "Illustrator", file: "ilustrator.png", top: "34%", left: "82%", rotate: "6deg", delay: "0.4s", size: 58, duration: "7.2s", amp: "10px", scalePeak: "1.03", opacityPeak: "0.85" },
+  { label: "ComfyUI", file: "comfyui.png", top: "42%", left: "58%", rotate: "-6deg", delay: "2.1s", size: 42, duration: "7.8s", amp: "11px", scalePeak: "1.04", opacityPeak: "0.86" },
+  { label: "After Effects", file: "after-effects.png", top: "58%", left: "92%", rotate: "-5deg", delay: "1s", size: 54, duration: "6.4s", amp: "13px", scalePeak: "1.06", opacityPeak: "0.92" },
+  { label: "Xcode", file: "xcode.png", top: "70%", left: "66%", rotate: "7deg", delay: "1.3s", size: 44, duration: "6s", amp: "12px", scalePeak: "1.05", opacityPeak: "0.88" },
+  { label: "Premiere", file: "premiere.png", top: "82%", left: "86%", rotate: "4deg", delay: "1.6s", size: 48, duration: "8s", amp: "9px", scalePeak: "1.04", opacityPeak: "0.88" },
+];
 ---
 
 <section class="hero">
-  <div class="container">
-    <p class="eyebrow">Diseño Gráfico · Motion Graphics</p>
-    <h1 class="hero__title">
-      Hola, soy Elias.<br />
-      Diseño marcas y las pongo en movimiento.
-    </h1>
-    <p class="hero__subtitle">
-      <!-- TODO: reemplazá este párrafo por tu propia bajada. Contá en 2-3
-      líneas a qué te dedicás, con qué tipo de clientes/proyectos trabajás y
-      qué te distingue. -->
-      Trabajo en identidad visual, piezas gráficas y animación para marcas y
-      proyectos que necesitan comunicar con claridad — y con carácter.
-    </p>
-    <div class="hero__actions">
-      <a href="#trabajo" class="btn btn-primary">Ver trabajo</a>
-      <a href="#contacto" class="btn">Contactarme</a>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="hero__floaters" aria-hidden="true">
+    {tools.map((tool) => (
+      <img
+        class="tool-icon"
+        src={`/images/icons/${tool.file}`}
+        alt=""
+        width={tool.size}
+        height={tool.size}
+        style={`top:${tool.top}; left:${tool.left}; width:${tool.size}px; height:${tool.size}px; --rotate:${tool.rotate}; --amp:${tool.amp}; --scale-peak:${tool.scalePeak}; --opacity-peak:${tool.opacityPeak}; animation-duration:${tool.duration}; animation-delay:${tool.delay};`}
+      />
+    ))}
+  </div>
+
+  <div class="hero__inner container">
+    <div class="hero__copy">
+      <div class="logo-badge" aria-hidden="true">
+        <svg viewBox="0 0 120 120" width="72" height="72">
+          <circle cx="60" cy="60" r="56" fill="none" stroke="var(--accent-2)" stroke-width="2" />
+          <text x="60" y="52" text-anchor="middle" font-family="var(--font-display)" font-weight="700" font-size="26" fill="var(--accent-2)">TY</text>
+          <text x="60" y="76" text-anchor="middle" font-family="var(--font-display)" font-weight="700" font-size="15" letter-spacing="2" fill="var(--text)">SPACE</text>
+          <g fill="var(--accent-2)">
+            <circle cx="20" cy="24" r="1.6" />
+            <circle cx="100" cy="30" r="1.4" />
+            <circle cx="14" cy="80" r="1.4" />
+            <circle cx="104" cy="86" r="1.6" />
+            <circle cx="60" cy="8" r="1.4" />
+          </g>
+        </svg>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__title-line">Diseño que</span>
+        <span class="hero__title-line hero__title-line--accent">conecta ideas</span>
+      </h1>
+
+      <p class="hero__subtitle">
+        <!-- TODO: ajustá este texto si querés — es tu bajada original de
+        TySpace, adaptada como tu presentación personal. -->
+        Diseñador gráfico especializado en identidad visual, branding y
+        animación. Transformo ideas en experiencias visuales que dejan
+        huella — y en TySpace, mi espacio, también muestro lo que hago por
+        mis propias ganas de crear.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#trabajo" class="btn btn-primary btn-hero">Ver trabajos →</a>
+        <a href="#contacto" class="btn btn-hero">Contacto</a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    padding: 140px 0 96px;
+    position: relative;
+    /* --hero-bg queda de fondo por si la imagen tarda en cargar o no está
+       todavía; cuando pongas el archivo en /public/images/hero-banner.jpg
+       se muestra automáticamente. */
+    background-color: var(--hero-bg, var(--bg));
+    background-image: url("/images/hero-banner.jpg");
+    background-size: cover;
+    /* la cara queda cerca del borde superior de tu banner — anclamos
+       arriba para que el recorte vertical salga siempre de la parte de
+       abajo (el fondo), nunca de la cabeza. */
+    background-position: center top;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* degradé sobre la imagen para que el texto se lea bien sin importar qué
+     colores tenga el banner — oscuro donde está el texto (izquierda),
+     se aclara hacia la derecha para que se vea el banner. */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 35%,
+      color-mix(in srgb, var(--bg) 35%, transparent) 65%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  /* iconos de programas flotando sobre el banner, del lado derecho donde
+     se ve más la imagen (la izquierda queda tapada por el degradé para
+     que se lea el texto). */
+  .hero__floaters {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* glow en los colores de la marca (lima + violeta) para que los íconos
+     se despeguen del banner en vez de perderse contra la foto — capas de
+     drop-shadow superpuestas simulan el halo, más la sombra oscura de
+     abajo que les da profundidad. */
+  .tool-icon {
+    position: absolute;
+    /* rgba fijo en vez de color-mix(): mismo resultado visual pero sin
+       depender de una función CSS más nueva que puede no renderizar en
+       algunos navegadores/versiones. */
+    filter: drop-shadow(0 0 6px rgba(166, 255, 46, 0.8))
+      drop-shadow(0 0 18px rgba(166, 255, 46, 0.6))
+      drop-shadow(0 0 32px rgba(157, 77, 255, 0.55))
+      drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
+    transform: rotate(var(--rotate));
+    animation-name: float;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    /* duration y delay los pone cada ícono por style inline, así no se
+       mueven todos igual ni al mismo tiempo */
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: rotate(var(--rotate)) translateY(0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: rotate(var(--rotate)) translateY(calc(-1 * var(--amp))) scale(var(--scale-peak));
+      opacity: var(--opacity-peak);
+    }
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: 96px 24px;
+    min-height: 640px;
+  }
+
+  .hero__copy {
+    max-width: 620px;
+  }
+
+  .logo-badge {
+    margin-bottom: 32px;
   }
 
   .hero__title {
-    font-size: clamp(36px, 6vw, 64px);
+    font-size: clamp(34px, 5vw, 52px);
     line-height: 1.05;
-    max-width: 16ch;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero__title-line--accent {
+    color: var(--accent-2);
   }
 
   .hero__subtitle {
-    margin-top: 28px;
-    max-width: 52ch;
-    font-size: 18px;
+    margin-top: 24px;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.6;
     color: var(--text-muted);
   }
 
   .hero__actions {
     display: flex;
     gap: 12px;
-    margin-top: 40px;
+    margin-top: 36px;
+  }
+
+  .btn-hero {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    padding: 14px 26px;
+  }
+
+  @media (max-width: 860px) {
+    .hero__inner {
+      padding: 64px 24px;
+      min-height: 460px;
+    }
+
+    /* en pantallas angostas el banner se recorta bastante — subimos el
+       fondo más opaco para que el texto siga siendo legible aunque se vea
+       menos banner de fondo. */
+    .hero__overlay {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+        color-mix(in srgb, var(--bg) 82%, transparent) 55%,
+        color-mix(in srgb, var(--bg) 60%, transparent) 100%
+      );
+    }
+
+    /* con tan poco ancho los iconos flotantes quedan encima del texto o
+       se pierden contra el fondo más oscuro — se ocultan en mobile. */
+    .hero__floaters {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-icon {
+      animation: none;
+    }
   }
 </style>

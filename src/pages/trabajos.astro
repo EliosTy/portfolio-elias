@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import ProjectsGrid from "../components/ProjectsGrid.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Trabajos — TySpace">
+  <Header />
+  <div class="trabajos-hero container">
+    <p class="eyebrow">Trabajos</p>
+    <h1 class="trabajos-hero__title">Todos los proyectos</h1>
+  </div>
+  <ProjectsGrid />
+  <Contact />
+  <Footer />
+</BaseLayout>
+
+<style>
+  .trabajos-hero {
+    padding: 64px 24px 0;
+  }
+
+  .trabajos-hero__title {
+    font-size: clamp(28px, 4vw, 40px);
+  }
+</style>
