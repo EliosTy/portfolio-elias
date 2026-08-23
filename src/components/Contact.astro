@@ -89,9 +89,20 @@ const CONTACT_EMAIL = "tu@email.com";
 
   .contact__form .btn {
     align-self: center;
+    justify-content: center;
     min-width: 160px;
     border: none;
     cursor: pointer;
+    /* mismo naranja que "Consultar" (Servicios) y "Ver trabajos" (banner) —
+       --cta-accent está definido una sola vez en global.css */
+    background: var(--cta-accent);
+    color: #fff;
+  }
+
+  .contact__form .btn:hover {
+    background: var(--cta-accent);
+    color: #fff;
+    opacity: 0.85;
   }
 
   .contact__hint {

@@ -9,6 +9,11 @@
 // muestra "Consultar" en el botón y no inventa ningún número.
 //
 // icon: uno de "flash" | "star" | "trend" | "crown"
+//
+// color: opcional. "gold" tiñe la tarjeta de dorado (Branding), "cyan" la
+// tiñe de cian (Motion). Dejalo en null/sin definir para que la tarjeta
+// use el violeta genérico de siempre — así quedó el Plan Premium, sin
+// tocar.
 // ============================================================================
 
 export const services = [
@@ -21,6 +26,7 @@ export const services = [
     price: null, // TODO: ej. "$80.000"
     priceUnit: "por proyecto",
     highlight: false,
+    color: "gold",
   },
   {
     title: "Plan Premium",
@@ -31,6 +37,7 @@ export const services = [
     price: null, // TODO: ej. "$120.000"
     priceUnit: "por proyecto",
     highlight: true,
+    color: null,
   },
   {
     title: "Motion para eventos y redes",
@@ -41,5 +48,6 @@ export const services = [
     price: null, // TODO: ej. "$60.000"
     priceUnit: "por proyecto",
     highlight: false,
+    color: "cyan",
   },
 ];

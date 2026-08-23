@@ -12,7 +12,16 @@ import { services } from "../data/services.js";
 
     <div class="services__grid">
       {services.map((service) => (
-        <div class:list={["service-card", { "service-card--highlight": service.highlight }]}>
+        <div
+          class:list={[
+            "service-card",
+            {
+              "service-card--highlight": service.highlight,
+              "service-card--gold": service.color === "gold",
+              "service-card--cyan": service.color === "cyan",
+            },
+          ]}
+        >
           {service.highlight && <span class="service-card__badge">Más completo</span>}
 
           <div class="service-card__head">
@@ -69,9 +78,7 @@ import { services } from "../data/services.js";
             ))}
           </ul>
 
-          <a href="#contacto" class="btn service-card__cta">
-            Consultar <span aria-hidden="true">↗</span>
-          </a>
+          <a href="#contacto" class="btn service-card__cta">Consultar</a>
         </div>
       ))}
     </div>
@@ -80,8 +87,16 @@ import { services } from "../data/services.js";
 
 <style>
   .services {
-    /* TODO: cambiá este naranja si más adelante querés otro tono */
-    --services-accent: #ff7a30;
+    /* mismo naranja que "Ver trabajos" del banner y "Enviar" del
+       formulario de contacto (definido una sola vez en global.css como
+       --cta-accent) */
+    --services-accent: var(--cta-accent);
+    /* mismos dorado/cian que usan las secciones "Branding Creativo" y
+       "Motion Creativo" de arriba, para que la tarjeta de cada plan se
+       sienta parte de la misma sección. El Plan Premium no usa ninguno de
+       los dos — sigue con el violeta genérico de siempre. */
+    --gold-accent: #d4af37;
+    --cyan-accent: #29d3ff;
   }
 
   .services__header {
@@ -145,6 +160,79 @@ import { services } from "../data/services.js";
   .service-card:hover {
     border-color: var(--accent-2);
     transform: translateY(-4px);
+  }
+
+  /* tarjeta de Branding — dorado en vez del violeta genérico: fondo, ícono,
+     checks, botón y borde en hover, todo tiñe hacia --gold-accent. */
+  .service-card--gold {
+    background: linear-gradient(
+      145deg,
+      var(--bg-elevated) 10%,
+      color-mix(in srgb, var(--gold-accent) 38%, var(--bg-elevated))
+    );
+  }
+
+  .service-card--gold:hover {
+    border-color: var(--gold-accent);
+  }
+
+  .service-card--gold .service-card__icon {
+    border-color: var(--gold-accent);
+    color: var(--gold-accent);
+  }
+
+  .service-card--gold .check-icon {
+    border-color: var(--gold-accent);
+    color: var(--gold-accent);
+  }
+
+  .service-card--gold .service-card__cta {
+    background: var(--gold-accent);
+    border-color: var(--gold-accent);
+    color: #170f2c;
+  }
+
+  .service-card--gold .service-card__cta:hover {
+    background: var(--gold-accent);
+    border-color: var(--gold-accent);
+    color: #170f2c;
+    opacity: 0.85;
+  }
+
+  /* tarjeta de Motion — mismo tratamiento pero con --cyan-accent. */
+  .service-card--cyan {
+    background: linear-gradient(
+      145deg,
+      var(--bg-elevated) 10%,
+      color-mix(in srgb, var(--cyan-accent) 38%, var(--bg-elevated))
+    );
+  }
+
+  .service-card--cyan:hover {
+    border-color: var(--cyan-accent);
+  }
+
+  .service-card--cyan .service-card__icon {
+    border-color: var(--cyan-accent);
+    color: var(--cyan-accent);
+  }
+
+  .service-card--cyan .check-icon {
+    border-color: var(--cyan-accent);
+    color: var(--cyan-accent);
+  }
+
+  .service-card--cyan .service-card__cta {
+    background: var(--cyan-accent);
+    border-color: var(--cyan-accent);
+    color: #0b0616;
+  }
+
+  .service-card--cyan .service-card__cta:hover {
+    background: var(--cyan-accent);
+    border-color: var(--cyan-accent);
+    color: #0b0616;
+    opacity: 0.85;
   }
 
   /* el plan destacado usa el mismo degradé de fondo que las demás, pero se

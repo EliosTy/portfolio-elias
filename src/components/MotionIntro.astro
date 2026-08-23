@@ -28,69 +28,67 @@ const included = [
 
 <section class="motion-highlight">
   <div class="container">
-    <div class="motion-highlight__card">
-      <h2 class="motion-highlight__title">Motion Creativo</h2>
-      <p class="motion-highlight__tagline">Ideas que cobran vida.</p>
-      <p class="motion-highlight__description">
-        <!-- TODO: ajustá este texto si querés otro enfoque. -->
-        Transformo conceptos estáticos en piezas dinámicas que capturan la
-        atención — pensadas para redes, presentaciones y eventos en vivo.
-      </p>
+    <h2 class="motion-highlight__title">Motion Creativo</h2>
+    <p class="motion-highlight__tagline">Ideas que cobran vida.</p>
+    <p class="motion-highlight__description">
+      <!-- TODO: ajustá este texto si querés otro enfoque. -->
+      Transformo conceptos estáticos en piezas dinámicas que capturan la
+      atención — pensadas para redes, presentaciones y eventos en vivo.
+    </p>
 
-      <div class="motion-highlight__included">
-        <p class="motion-highlight__included-title">
-          Qué <span class="motion-highlight__included-title-accent">incluye</span>
-        </p>
-        <div class="motion-highlight__items">
-          {included.map((item) => (
-            <div class="included-item">
-              <div class="included-item__icon">
-                {item.icon === "play" && (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M10 8.5l6 3.5-6 3.5v-7z" fill="currentColor" stroke="none" />
-                  </svg>
-                )}
-                {item.icon === "reel" && (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="5" width="18" height="14" rx="2" />
-                    <path d="M3 9h18" />
-                    <path d="M3 15h18" />
-                    <path d="M8 5v4" />
-                    <path d="M8 15v4" />
-                    <path d="M16 5v4" />
-                    <path d="M16 15v4" />
-                  </svg>
-                )}
-                {item.icon === "clapper" && (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="8" width="18" height="12" rx="1" />
-                    <path d="M3 8l1.5-4h15L21 8" />
-                    <path d="M3 8l3-4M9 8l3-4M15 8l3-4" />
-                  </svg>
-                )}
-                {item.icon === "calendar" && (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="5" width="18" height="16" rx="2" />
-                    <path d="M3 10h18" />
-                    <path d="M8 3v4" />
-                    <path d="M16 3v4" />
-                    <path d="M10.5 13.5l5 2.5-5 2.5v-5z" fill="currentColor" stroke="none" />
-                  </svg>
-                )}
-                {item.icon === "storyboard" && (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="6" width="6" height="6" rx="1" />
-                    <rect x="9" y="6" width="6" height="6" rx="1" />
-                    <rect x="16" y="6" width="6" height="6" rx="1" />
-                    <path d="M5 15v3M12 15v3M19 15v3" />
-                  </svg>
-                )}
-              </div>
-              <span class="included-item__label">{item.label}</span>
+    <div class="motion-highlight__included">
+      <p class="motion-highlight__included-title">
+        Qué <span class="motion-highlight__included-title-accent">incluye</span>
+      </p>
+      <div class="motion-highlight__items">
+        {included.map((item) => (
+          <div class="included-item">
+            <div class="included-item__icon">
+              {item.icon === "play" && (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M10 8.5l6 3.5-6 3.5v-7z" fill="currentColor" stroke="none" />
+                </svg>
+              )}
+              {item.icon === "reel" && (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="M3 9h18" />
+                  <path d="M3 15h18" />
+                  <path d="M8 5v4" />
+                  <path d="M8 15v4" />
+                  <path d="M16 5v4" />
+                  <path d="M16 15v4" />
+                </svg>
+              )}
+              {item.icon === "clapper" && (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="8" width="18" height="12" rx="1" />
+                  <path d="M3 8l1.5-4h15L21 8" />
+                  <path d="M3 8l3-4M9 8l3-4M15 8l3-4" />
+                </svg>
+              )}
+              {item.icon === "calendar" && (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="16" rx="2" />
+                  <path d="M3 10h18" />
+                  <path d="M8 3v4" />
+                  <path d="M16 3v4" />
+                  <path d="M10.5 13.5l5 2.5-5 2.5v-5z" fill="currentColor" stroke="none" />
+                </svg>
+              )}
+              {item.icon === "storyboard" && (
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="6" height="6" rx="1" />
+                  <rect x="9" y="6" width="6" height="6" rx="1" />
+                  <rect x="16" y="6" width="6" height="6" rx="1" />
+                  <path d="M5 15v3M12 15v3M19 15v3" />
+                </svg>
+              )}
             </div>
-          ))}
-        </div>
+            <span class="included-item__label">{item.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   </div>
@@ -98,40 +96,30 @@ const included = [
 
 <style>
   .motion-highlight {
-    padding: 40px 0 0;
-  }
-
-  .motion-highlight__card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 28px;
-    border: 1px solid var(--border);
-    background: var(--hero-bg, var(--bg-elevated));
-    padding: 48px;
-  }
-
-  /* mismo glow que usa Branding Creativo, así las dos tarjetas se ven
-     como parte de un mismo par */
-  .motion-highlight__card::before {
-    content: "";
-    position: absolute;
-    inset: -20% -10% auto -10%;
-    height: 420px;
-    background: var(--glow, none);
-    pointer-events: none;
-  }
-
-  .motion-highlight__title,
-  .motion-highlight__tagline,
-  .motion-highlight__description,
-  .motion-highlight__included {
-    position: relative;
-    z-index: 1;
+    /* cian — movimiento/motion. Se define acá adentro (no en el tema
+       global) para que solo afecte a esta sección; ServicesIntro.astro
+       hace lo mismo pero con dorado, para Branding.
+       Ahora el color ocupa todo el ancho de la sección (sin tarjeta, sin
+       trazo, sin bordes redondeados) y va pegada a Branding Creativo,
+       arriba, sin espacio entre las dos. El texto muted usa un gris frío
+       propio en vez del --text-muted del tema (ese tiene un tinte
+       violeta). */
+    --motion-accent: #29d3ff;
+    --motion-accent-soft: #8be8ff;
+    --motion-bg: #0a222b;
+    --motion-muted: #a9c4cc;
+    padding: 64px 0;
+    background: linear-gradient(
+      to left,
+      color-mix(in srgb, var(--motion-accent) 14%, var(--motion-bg)),
+      var(--motion-bg)
+    );
+    border-bottom: 1px solid var(--border);
   }
 
   .motion-highlight__title {
     font-size: clamp(26px, 3.5vw, 36px);
-    color: var(--text-muted);
+    color: var(--motion-accent-soft);
   }
 
   .motion-highlight__tagline {
@@ -147,14 +135,14 @@ const included = [
     max-width: 62ch;
     font-size: 15px;
     line-height: 1.6;
-    color: var(--text-muted);
+    color: var(--motion-muted);
   }
 
   .motion-highlight__included {
     margin-top: 40px;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--motion-accent) 30%, transparent);
     border-radius: 18px;
-    background: color-mix(in srgb, var(--bg) 35%, transparent);
+    background: color-mix(in srgb, black 30%, transparent);
     padding: 28px 32px;
   }
 
@@ -167,7 +155,7 @@ const included = [
   .motion-highlight__included-title-accent {
     font-family: var(--font-serif-italic);
     font-style: italic;
-    color: var(--text);
+    color: var(--motion-accent-soft);
   }
 
   .motion-highlight__items {
@@ -186,7 +174,7 @@ const included = [
     min-width: 110px;
     text-align: center;
     padding: 0 12px;
-    border-left: 1px solid var(--border);
+    border-left: 1px solid color-mix(in srgb, var(--motion-accent) 25%, transparent);
   }
 
   .included-item:first-child {
@@ -200,18 +188,18 @@ const included = [
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--text);
-    color: var(--hero-bg, var(--bg));
+    background: var(--motion-accent);
+    color: #170f2c;
   }
 
   .included-item__label {
     font-size: 13px;
-    color: var(--text-muted);
+    color: var(--motion-muted);
   }
 
   @media (max-width: 860px) {
-    .motion-highlight__card {
-      padding: 32px 24px;
+    .motion-highlight {
+      padding: 40px 0;
     }
 
     .motion-highlight__items {

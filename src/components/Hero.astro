@@ -65,7 +65,7 @@ const tools = [
       </p>
 
       <div class="hero__actions">
-        <a href="#trabajo" class="btn btn-primary btn-hero">Ver trabajos →</a>
+        <a href="#trabajo" class="btn btn-primary btn-hero btn-hero--cta">Ver trabajos</a>
         <a href="#contacto" class="btn btn-hero">Contacto</a>
       </div>
     </div>
@@ -115,18 +115,20 @@ const tools = [
     pointer-events: none;
   }
 
-  /* glow en los colores de la marca (lima + violeta) para que los íconos
-     se despeguen del banner en vez de perderse contra la foto — capas de
-     drop-shadow superpuestas simulan el halo, más la sombra oscura de
-     abajo que les da profundidad. */
+  /* glow violeta intenso para que los íconos se despeguen del banner en
+     vez de perderse contra la foto — capas de drop-shadow superpuestas
+     simulan el halo (un tono lavanda más claro en el centro, el violeta
+     de la marca en el medio, uno más oscuro afuera), más la sombra oscura
+     de abajo que les da profundidad. El glow "respira" — crece y se
+     achica suavemente — como parte del mismo ciclo de flotado. */
   .tool-icon {
     position: absolute;
     /* rgba fijo en vez de color-mix(): mismo resultado visual pero sin
        depender de una función CSS más nueva que puede no renderizar en
        algunos navegadores/versiones. */
-    filter: drop-shadow(0 0 6px rgba(166, 255, 46, 0.8))
-      drop-shadow(0 0 18px rgba(166, 255, 46, 0.6))
-      drop-shadow(0 0 32px rgba(157, 77, 255, 0.55))
+    filter: drop-shadow(0 0 6px rgba(196, 148, 255, 0.85))
+      drop-shadow(0 0 18px rgba(157, 77, 255, 0.7))
+      drop-shadow(0 0 32px rgba(124, 58, 237, 0.55))
       drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
     transform: rotate(var(--rotate));
     animation-name: float;
@@ -141,10 +143,18 @@ const tools = [
     100% {
       transform: rotate(var(--rotate)) translateY(0) scale(1);
       opacity: 1;
+      filter: drop-shadow(0 0 6px rgba(196, 148, 255, 0.85))
+        drop-shadow(0 0 18px rgba(157, 77, 255, 0.7))
+        drop-shadow(0 0 32px rgba(124, 58, 237, 0.55))
+        drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
     }
     50% {
       transform: rotate(var(--rotate)) translateY(calc(-1 * var(--amp))) scale(var(--scale-peak));
       opacity: var(--opacity-peak);
+      filter: drop-shadow(0 0 9px rgba(196, 148, 255, 0.95))
+        drop-shadow(0 0 26px rgba(157, 77, 255, 0.85))
+        drop-shadow(0 0 44px rgba(124, 58, 237, 0.7))
+        drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
     }
   }
 
@@ -198,6 +208,21 @@ const tools = [
     font-size: 13px;
     letter-spacing: 0.03em;
     padding: 14px 26px;
+  }
+
+  /* mismo naranja que el botón "Consultar" de Servicios y "Enviar" del
+     formulario de contacto (--cta-accent, definido en global.css) */
+  .btn-hero--cta {
+    background: var(--cta-accent);
+    border-color: var(--cta-accent);
+    color: #fff;
+  }
+
+  .btn-hero--cta:hover {
+    background: var(--cta-accent);
+    border-color: var(--cta-accent);
+    color: #fff;
+    opacity: 0.85;
   }
 
   @media (max-width: 860px) {

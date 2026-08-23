@@ -74,6 +74,11 @@
 
 :root {
   --font-serif-italic: "Fraunces", Georgia, serif;
+  /* naranja compartido por los botones "call to action" fuertes: el CTA
+     de Servicios, el botón "Ver trabajos" del banner y "Enviar" del
+     formulario de contacto — así los tres quedan siempre del mismo color
+     aunque se edite acá una sola vez. */
+  --cta-accent: #ff7a30;
 }
 
 * {
