@@ -24,7 +24,21 @@ const included = [
 ---
 
 <section class="branding-highlight">
-  <div class="container">
+  <div class="branding-highlight__row">
+    <div class="branding-highlight__media">
+      <!-- Reemplazá este archivo en /public/branding/branding-video.mp4
+           (video real cuadrado, 1000x1000px recomendado, mp4). -->
+      <video
+        class="branding-highlight__photo"
+        src="/branding/branding-video.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+    </div>
+
+    <div class="branding-highlight__content">
     <h2 class="branding-highlight__title">Branding Creativo</h2>
     <p class="branding-highlight__tagline">Una marca que se sienta inolvidable.</p>
     <p class="branding-highlight__description">
@@ -83,41 +97,71 @@ const included = [
         ))}
       </div>
     </div>
+    </div>
   </div>
 </section>
 
 <style>
   .branding-highlight {
-    /* dorado — identidad/branding. Se define acá adentro (no en el tema
-       global) para que solo afecte a esta sección; MotionIntro.astro hace
-       lo mismo pero con cian.
-       Ahora el color ocupa todo el ancho de la sección (sin tarjeta, sin
-       trazo, sin bordes redondeados) y va pegada a Motion Creativo, sin
-       espacio entre las dos. El texto muted usa un gris cálido propio en
-       vez del --text-muted del tema (ese tiene un tinte violeta). */
-    --branding-accent: #d4af37;
-    --branding-accent-soft: #f0d685;
-    --branding-bg: #241b09;
-    --branding-muted: #cdbfa0;
-    padding: 64px 0;
-    background: linear-gradient(
-      to left,
-      color-mix(in srgb, var(--branding-accent) 14%, var(--branding-bg)),
-      var(--branding-bg)
-    );
+    /* dorado — identidad/branding. Colores tomados de la referencia que
+       pasaste (panel dorado con foto insertada). Se definen acá adentro
+       (no en el tema global) para que solo afecten a esta sección;
+       MotionIntro.astro hace lo mismo pero con azul índigo.
+       El fondo dorado es claro/brillante, así que el texto usa tonos
+       oscuros propios (--branding-ink / --branding-muted) en vez de los
+       --text / --text-muted del tema, que están pensados para fondos
+       oscuros y no tendrían contraste acá. */
+    --branding-bg: #f3c000;
+    --branding-ink: #1a1200;
+    --branding-muted: #5c4a12;
     border-top: 1px solid var(--border);
+  }
+
+  .branding-highlight__row {
+    display: flex;
+    align-items: stretch;
+    min-height: 480px;
+    background: var(--branding-bg);
+  }
+
+  .branding-highlight__media {
+    /* estirado a todo el alto de la fila (sin margen arriba ni abajo).
+       El ancho queda lo más cerca posible de ese alto real (~560px en
+       desktop normal) para que el recorte del video cuadrado sea mínimo
+       — comprimimos la caja "Qué incluye" a una sola fila de íconos
+       (ver .branding-highlight__items más abajo) para que la fila no
+       quede demasiado alta y el recorte sea casi imperceptible. */
+    flex: 0 0 auto;
+    width: min(560px, 50vw);
+    align-self: stretch;
+  }
+
+  .branding-highlight__photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .branding-highlight__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 640px;
+    padding: 56px clamp(24px, 6vw, 72px);
   }
 
   .branding-highlight__title {
     font-size: clamp(26px, 3.5vw, 36px);
-    color: var(--branding-accent-soft);
+    color: var(--branding-ink);
   }
 
   .branding-highlight__tagline {
     font-family: var(--font-serif-italic);
     font-style: italic;
     font-size: clamp(20px, 2.5vw, 26px);
-    color: var(--text);
+    color: var(--branding-ink);
     margin: 6px 0 0;
   }
 
@@ -131,41 +175,45 @@ const included = [
 
   .branding-highlight__included {
     margin-top: 40px;
-    border: 1px solid color-mix(in srgb, var(--branding-accent) 30%, transparent);
+    border: 1px solid color-mix(in srgb, black 45%, transparent);
     border-radius: 18px;
-    background: color-mix(in srgb, black 30%, transparent);
+    background: color-mix(in srgb, black 78%, transparent);
     padding: 28px 32px;
   }
 
   .branding-highlight__included-title {
     font-size: 18px;
-    color: var(--text);
+    color: #fff;
     margin: 0 0 24px;
   }
 
   .branding-highlight__included-title-accent {
     font-family: var(--font-serif-italic);
     font-style: italic;
-    color: var(--branding-accent-soft);
+    color: var(--branding-bg);
   }
 
   .branding-highlight__items {
+    /* una sola fila en desktop (nowrap) — mantiene la caja más baja para
+       que la columna de video (ver .branding-highlight__media) no tenga
+       que estirarse tanto y el recorte del video cuadrado sea mínimo.
+       En mobile vuelve a envolver en 2 columnas (ver media query). */
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 24px;
+    flex-wrap: nowrap;
+    gap: 14px;
   }
 
   .included-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex: 1;
-    min-width: 110px;
+    min-width: 0;
     text-align: center;
-    padding: 0 12px;
-    border-left: 1px solid color-mix(in srgb, var(--branding-accent) 25%, transparent);
+    padding: 0 8px;
+    border-left: 1px solid color-mix(in srgb, #fff 15%, transparent);
   }
 
   .included-item:first-child {
@@ -179,22 +227,35 @@ const included = [
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--branding-accent);
-    color: #170f2c;
+    background: var(--branding-bg);
+    color: var(--branding-ink);
   }
 
   .included-item__label {
     font-size: 13px;
-    color: var(--branding-muted);
+    color: #cfc7b3;
   }
 
   @media (max-width: 860px) {
-    .branding-highlight {
-      padding: 40px 0;
+    .branding-highlight__row {
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .branding-highlight__media {
+      flex: none;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    .branding-highlight__content {
+      max-width: none;
+      padding: 40px 24px;
     }
 
     .branding-highlight__items {
       justify-content: flex-start;
+      flex-wrap: wrap;
     }
 
     .included-item {
@@ -203,3 +264,42 @@ const included = [
     }
   }
 </style>
+
+<script>
+  // El video es cuadrado (1000x1000) y tiene que quedar pegado arriba y
+  // abajo de la sección, SIN recortarse ni un pixel. El ancho vía CSS
+  // (clamp/vw) es solo una aproximación — acá lo ajustamos con JS para
+  // que el ancho quede exactamente igual al alto real ya renderizado,
+  // pixel a pixel, sin importar el largo del texto ni el ancho de
+  // pantalla. Por debajo de 860px no hace falta (ahí ya es un cuadrado
+  // simple de ancho completo por CSS).
+  function syncSquare(selector: string) {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (!el) return;
+
+    const mq = window.matchMedia("(min-width: 861px)");
+
+    function sync() {
+      if (!el) return;
+      if (!mq.matches) {
+        el.style.width = "";
+        return;
+      }
+      const height = el.getBoundingClientRect().height;
+      if (height > 0) {
+        el.style.width = `${height}px`;
+      }
+    }
+
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => sync());
+      ro.observe(el);
+    } else {
+      window.addEventListener("resize", sync);
+    }
+    mq.addEventListener("change", sync);
+    sync();
+  }
+
+  syncSquare(".branding-highlight__media");
+</script>

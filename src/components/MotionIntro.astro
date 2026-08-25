@@ -27,7 +27,8 @@ const included = [
 ---
 
 <section class="motion-highlight">
-  <div class="container">
+  <div class="motion-highlight__row">
+    <div class="motion-highlight__content">
     <h2 class="motion-highlight__title">Motion Creativo</h2>
     <p class="motion-highlight__tagline">Ideas que cobran vida.</p>
     <p class="motion-highlight__description">
@@ -91,35 +92,78 @@ const included = [
         ))}
       </div>
     </div>
+    </div>
+
+    <div class="motion-highlight__media">
+      <!-- Reemplazá este archivo en /public/motion/motion-video.mp4
+           (video real cuadrado, 1000x1000px recomendado, mp4). -->
+      <video
+        class="motion-highlight__photo"
+        src="/motion/motion-video.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+    </div>
   </div>
 </section>
 
 <style>
   .motion-highlight {
-    /* cian — movimiento/motion. Se define acá adentro (no en el tema
-       global) para que solo afecte a esta sección; ServicesIntro.astro
-       hace lo mismo pero con dorado, para Branding.
-       Ahora el color ocupa todo el ancho de la sección (sin tarjeta, sin
-       trazo, sin bordes redondeados) y va pegada a Branding Creativo,
-       arriba, sin espacio entre las dos. El texto muted usa un gris frío
-       propio en vez del --text-muted del tema (ese tiene un tinte
-       violeta). */
-    --motion-accent: #29d3ff;
-    --motion-accent-soft: #8be8ff;
-    --motion-bg: #0a222b;
-    --motion-muted: #a9c4cc;
-    padding: 64px 0;
-    background: linear-gradient(
-      to left,
-      color-mix(in srgb, var(--motion-accent) 14%, var(--motion-bg)),
-      var(--motion-bg)
-    );
+    /* azul índigo — movimiento/motion. Color tomado de la referencia que
+       pasaste (panel índigo con foto insertada). Se define acá adentro
+       (no en el tema global) para que solo afecte a esta sección;
+       ServicesIntro.astro hace lo mismo pero con dorado, para Branding.
+       El fondo es medio-oscuro, así que el texto claro del tema (--text)
+       sigue funcionando bien, pero el "muted" usa un tono frío propio en
+       vez de --text-muted (ese tiene un tinte violeta). */
+    --motion-bg: #3c4799;
+    --motion-muted: #c3c9ec;
+    --motion-icon-bg: color-mix(in srgb, var(--motion-bg) 45%, white);
+    --motion-icon-ink: #1b2350;
     border-bottom: 1px solid var(--border);
+  }
+
+  .motion-highlight__row {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    min-height: 480px;
+    background: var(--motion-bg);
+  }
+
+  .motion-highlight__media {
+    /* estirado a todo el alto de la fila (sin margen arriba ni abajo).
+       El ancho queda lo más cerca posible de ese alto real (~560px en
+       desktop normal) para que el recorte del video cuadrado sea mínimo
+       — comprimimos la caja "Qué incluye" a una sola fila de íconos
+       (ver .motion-highlight__items más abajo) para que la fila no
+       quede demasiado alta y el recorte sea casi imperceptible. */
+    flex: 0 0 auto;
+    width: min(560px, 50vw);
+    align-self: stretch;
+  }
+
+  .motion-highlight__photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .motion-highlight__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 640px;
+    padding: 56px clamp(24px, 6vw, 72px);
   }
 
   .motion-highlight__title {
     font-size: clamp(26px, 3.5vw, 36px);
-    color: var(--motion-accent-soft);
+    color: #fff;
   }
 
   .motion-highlight__tagline {
@@ -140,7 +184,7 @@ const included = [
 
   .motion-highlight__included {
     margin-top: 40px;
-    border: 1px solid color-mix(in srgb, var(--motion-accent) 30%, transparent);
+    border: 1px solid color-mix(in srgb, black 40%, transparent);
     border-radius: 18px;
     background: color-mix(in srgb, black 30%, transparent);
     padding: 28px 32px;
@@ -155,26 +199,30 @@ const included = [
   .motion-highlight__included-title-accent {
     font-family: var(--font-serif-italic);
     font-style: italic;
-    color: var(--motion-accent-soft);
+    color: #fff;
   }
 
   .motion-highlight__items {
+    /* una sola fila en desktop (nowrap) — mantiene la caja más baja para
+       que la columna de video (ver .motion-highlight__media) no tenga
+       que estirarse tanto y el recorte del video cuadrado sea mínimo.
+       En mobile vuelve a envolver en 2 columnas (ver media query). */
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 24px;
+    flex-wrap: nowrap;
+    gap: 14px;
   }
 
   .included-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     flex: 1;
-    min-width: 110px;
+    min-width: 0;
     text-align: center;
-    padding: 0 12px;
-    border-left: 1px solid color-mix(in srgb, var(--motion-accent) 25%, transparent);
+    padding: 0 8px;
+    border-left: 1px solid color-mix(in srgb, #fff 15%, transparent);
   }
 
   .included-item:first-child {
@@ -188,8 +236,8 @@ const included = [
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: var(--motion-accent);
-    color: #170f2c;
+    background: var(--motion-icon-bg);
+    color: var(--motion-icon-ink);
   }
 
   .included-item__label {
@@ -198,12 +246,25 @@ const included = [
   }
 
   @media (max-width: 860px) {
-    .motion-highlight {
-      padding: 40px 0;
+    .motion-highlight__row {
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .motion-highlight__media {
+      flex: none;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    .motion-highlight__content {
+      max-width: none;
+      padding: 40px 24px;
     }
 
     .motion-highlight__items {
       justify-content: flex-start;
+      flex-wrap: wrap;
     }
 
     .included-item {
@@ -212,3 +273,41 @@ const included = [
     }
   }
 </style>
+
+<script>
+  // Mismo ajuste que en ServicesIntro.astro (Branding): el video es
+  // cuadrado (1000x1000) y tiene que quedar pegado arriba y abajo de la
+  // sección sin recortarse ni un pixel. El ancho vía CSS es solo una
+  // aproximación — con JS lo igualamos exactamente al alto real ya
+  // renderizado. Por debajo de 860px no hace falta (ahí ya es cuadrado
+  // simple de ancho completo por CSS).
+  function syncSquare(selector: string) {
+    const el = document.querySelector<HTMLElement>(selector);
+    if (!el) return;
+
+    const mq = window.matchMedia("(min-width: 861px)");
+
+    function sync() {
+      if (!el) return;
+      if (!mq.matches) {
+        el.style.width = "";
+        return;
+      }
+      const height = el.getBoundingClientRect().height;
+      if (height > 0) {
+        el.style.width = `${height}px`;
+      }
+    }
+
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => sync());
+      ro.observe(el);
+    } else {
+      window.addEventListener("resize", sync);
+    }
+    mq.addEventListener("change", sync);
+    sync();
+  }
+
+  syncSquare(".motion-highlight__media");
+</script>
