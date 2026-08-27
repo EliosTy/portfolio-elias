@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Preview</title>
+<link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Fraunces:ital,wght@1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -11,10 +12,12 @@
 <style>
   .header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
   .header__inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
-  .header__logo { font-family: var(--font-display); font-weight: 600; text-decoration: none; font-size: 18px; letter-spacing: -0.01em; }
+  .header__logo { display: inline-flex; align-items: center; text-decoration: none; transition: opacity 0.2s ease; }
+  .header__logo img { display: block; height: 38px; width: auto; }
+  .header__logo:hover { opacity: 0.8; }
   .header__nav { display: flex; gap: 28px; flex: 1; justify-content: center; }
   .header__nav a { text-decoration: none; font-size: 14px; color: var(--text-muted); }
-  .header__nav a:hover, .header__logo:hover { color: var(--accent-2); }
+  .header__nav a:hover { color: var(--accent-2); }
   .header__socials { display: flex; gap: 12px; }
   .header__social-icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); color: var(--text-muted); }
 
@@ -23,6 +26,7 @@
   .hero__inner { position: relative; z-index: 1; display: flex; align-items: center; padding: 96px 24px; min-height: 640px; max-width: 1180px; margin: 0 auto; }
   .hero__copy { max-width: 620px; }
   .logo-badge { margin-bottom: 32px; }
+  .logo-badge img { transform: translateX(-13%); }
   .hero__title { font-size: clamp(34px, 5vw, 52px); line-height: 1.05; text-transform: uppercase; display: flex; flex-direction: column; gap: 4px; }
   .hero__title-line--accent { color: var(--accent-2); }
   .hero__subtitle { margin-top: 24px; max-width: 46ch; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
@@ -207,6 +211,7 @@
     .blog__grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 720px) {
+    .header__nav { display: none; }
     .clients__grid { grid-template-columns: repeat(2, 1fr); }
     .experience__stats { grid-template-columns: 1fr; gap: 28px; }
     .experience__stat-ring { width: 108px; height: 108px; }
@@ -219,7 +224,7 @@
 <body>
   <header class="header">
     <div class="container header__inner">
-      <a href="#" class="header__logo">TySpace</a>
+      <a href="#" class="header__logo"><img src="../public/logos/tyspace-wordmark-blanco.svg" alt="TySpace" width="144" height="60" /></a>
       <nav class="header__nav">
         <a href="#">Inicio</a>
         <a href="#trabajo">Trabajos</a>
@@ -247,18 +252,7 @@
     <div class="hero__inner">
       <div class="hero__copy">
         <div class="logo-badge">
-          <svg viewBox="0 0 120 120" width="72" height="72">
-            <circle cx="60" cy="60" r="56" fill="none" stroke="var(--accent-2)" stroke-width="2" />
-            <text x="60" y="52" text-anchor="middle" font-family="var(--font-display)" font-weight="700" font-size="26" fill="var(--accent-2)">TY</text>
-            <text x="60" y="76" text-anchor="middle" font-family="var(--font-display)" font-weight="700" font-size="15" letter-spacing="2" fill="var(--text)">SPACE</text>
-            <g fill="var(--accent-2)">
-              <circle cx="20" cy="24" r="1.6" />
-              <circle cx="100" cy="30" r="1.4" />
-              <circle cx="14" cy="80" r="1.4" />
-              <circle cx="104" cy="86" r="1.6" />
-              <circle cx="60" cy="8" r="1.4" />
-            </g>
-          </svg>
+          <img src="../public/logos/tyspace-wordmark-blanco.svg" alt="TY SPACE" width="208" height="52" />
         </div>
         <h1 class="hero__title">
           <span>Diseño que</span>

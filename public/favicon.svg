@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#0b0b0d"/>
-  <text x="50%" y="56%" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#f2f2f0" text-anchor="middle" dominant-baseline="middle">E</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="135 163 996 996">
+  <g id="TY">
+    <polygon fill="#fff" points="633.22 527.19 284.8 527.19 218.12 411.57 565.83 410.81 633.22 527.19"/>
+    <polygon fill="#fff" points="667.5 773.77 601.36 888.33 326 411.4 457.95 410.81 667.5 773.77"/>
+    <polygon fill="#fff" points="759 911.67 619 911.67 750.21 680.81 594.71 411.48 734.71 411.48 890.21 680.81 759 911.67"/>
+    <polygon fill="#fff" points="908.27 653.13 838.21 531.79 907.74 411.58 1047.85 411.58 908.27 653.13"/>
+  </g>
 </svg>

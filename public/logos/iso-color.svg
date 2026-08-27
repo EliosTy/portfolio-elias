@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="ISO_COLOR" data-name="ISO COLOR" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1327.9 1357.37">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #a6ff2e;
+      }
+
+      .cls-2 {
+        fill: #412968;
+      }
+    </style>
+  </defs>
+  <rect class="cls-2" y="-.65" width="1327.9" height="1358.66"/>
+  <g id="TY">
+    <polygon class="cls-1" points="632.35 543.18 283.92 543.18 217.24 427.56 564.96 426.8 632.35 543.18"/>
+    <polygon class="cls-1" points="666.63 789.75 600.48 904.32 325.13 427.39 457.07 426.8 666.63 789.75"/>
+    <polygon class="cls-1" points="758.13 927.65 618.13 927.65 749.33 696.8 593.83 427.47 733.83 427.47 889.33 696.8 758.13 927.65"/>
+    <polygon class="cls-1" points="907.39 669.12 837.34 547.78 906.86 427.57 1046.97 427.57 907.39 669.12"/>
+  </g>
+</svg>

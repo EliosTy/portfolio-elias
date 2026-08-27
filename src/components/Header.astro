@@ -15,7 +15,9 @@ const socials = [
 
 <header class="header">
   <div class="container header__inner">
-    <a href="/" class="header__logo">TySpace</a>
+    <a href="/" class="header__logo">
+      <img src="/logos/tyspace-wordmark-blanco.svg" alt="TySpace" width="144" height="60" />
+    </a>
     <nav class="header__nav">
       {links.map((link) => (
         <a href={link.href}>{link.label}</a>
@@ -63,11 +65,20 @@ const socials = [
   }
 
   .header__logo {
-    font-family: var(--font-display);
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
-    font-size: 18px;
-    letter-spacing: -0.01em;
+    transition: opacity 0.2s ease;
+  }
+
+  .header__logo img {
+    display: block;
+    height: 38px;
+    width: auto;
+  }
+
+  .header__logo:hover {
+    opacity: 0.8;
   }
 
   .header__nav {
@@ -84,8 +95,7 @@ const socials = [
     transition: color 0.2s ease;
   }
 
-  .header__nav a:hover,
-  .header__logo:hover {
+  .header__nav a:hover {
     color: var(--accent-2, var(--text));
   }
 
