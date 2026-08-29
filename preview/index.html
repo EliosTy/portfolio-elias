@@ -7,7 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="../public/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Fraunces:ital,wght@1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Fraunces:ital,wght@1,500&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="global.css" />
 <style>
   .header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
@@ -25,8 +25,6 @@
   .hero__overlay { position: absolute; inset: 0; background: linear-gradient(100deg, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 78%, transparent) 35%, color-mix(in srgb, var(--bg) 35%, transparent) 65%, transparent 100%); pointer-events: none; }
   .hero__inner { position: relative; z-index: 1; display: flex; align-items: center; padding: 96px 24px; min-height: 640px; max-width: 1180px; margin: 0 auto; }
   .hero__copy { max-width: 620px; }
-  .logo-badge { margin-bottom: 32px; }
-  .logo-badge img { transform: translateX(-13%); }
   .hero__title { font-size: clamp(34px, 5vw, 52px); line-height: 1.05; text-transform: uppercase; display: flex; flex-direction: column; gap: 4px; }
   .hero__title-line--accent { color: var(--accent-2); }
   .hero__subtitle { margin-top: 24px; max-width: 46ch; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
@@ -35,10 +33,12 @@
   .btn-hero--cta { background: var(--cta-accent); border-color: var(--cta-accent); color: #fff; }
   .btn-hero--cta:hover { background: var(--cta-accent); border-color: var(--cta-accent); color: #fff; opacity: 0.85; }
   .hero__floaters { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-  .tool-icon { position: absolute; filter: drop-shadow(0 0 6px rgba(196,148,255,0.85)) drop-shadow(0 0 18px rgba(157,77,255,0.7)) drop-shadow(0 0 32px rgba(124,58,237,0.55)) drop-shadow(0 10px 22px rgba(0,0,0,0.45)); animation-name: float; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+  .tool-icon-wrap { position: absolute; display: block; transform: rotate(var(--rotate)); transform-origin: center; animation-name: float; animation-timing-function: ease-in-out; animation-iteration-count: infinite; will-change: transform, opacity; }
+  .tool-icon-glow { position: absolute; inset: 0; z-index: 0; border-radius: 22%; box-shadow: 0 0 10px 1px rgba(196,148,255,0.4), 0 0 20px 4px rgba(178,112,255,0.22), 0 0 32px 6px rgba(157,77,255,0.12); pointer-events: none; }
+  .tool-icon { position: relative; z-index: 1; display: block; width: 100%; height: 100%; }
   @keyframes float {
-    0%, 100% { transform: rotate(var(--rotate)) translateY(0) scale(1); opacity: 1; filter: drop-shadow(0 0 6px rgba(196,148,255,0.85)) drop-shadow(0 0 18px rgba(157,77,255,0.7)) drop-shadow(0 0 32px rgba(124,58,237,0.55)) drop-shadow(0 10px 22px rgba(0,0,0,0.45)); }
-    50% { transform: rotate(var(--rotate)) translateY(calc(-1 * var(--amp))) scale(var(--scale-peak)); opacity: var(--opacity-peak); filter: drop-shadow(0 0 9px rgba(196,148,255,0.95)) drop-shadow(0 0 26px rgba(157,77,255,0.85)) drop-shadow(0 0 44px rgba(124,58,237,0.7)) drop-shadow(0 10px 22px rgba(0,0,0,0.45)); }
+    0%, 100% { transform: rotate(var(--rotate)) translateY(0) scale(1); opacity: 1; }
+    50% { transform: rotate(var(--rotate)) translateY(calc(-1 * var(--amp))) scale(var(--scale-peak)); opacity: var(--opacity-peak); }
   }
 
   .clients { position: relative; overflow: hidden; padding: 56px 0; background: radial-gradient(circle 700px at -20% -20%, color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 0%, color-mix(in srgb, var(--accent-2) 22%, #000000) 55%, transparent 100%), radial-gradient(circle 700px at 120% 120%, color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 0%, color-mix(in srgb, var(--accent-2) 22%, #000000) 55%, transparent 100%), #000000; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -207,7 +207,7 @@
 <body>
   <header class="header">
     <div class="container header__inner">
-      <a href="#" class="header__logo"><img src="../public/logos/tyspace-color-transparente.svg" alt="TySpace" width="144" height="36" /></a>
+      <a href="#" class="header__logo"><img src="../public/logos/tyspace-slogan.svg" alt="TySpace — Diseño gráfico y branding" width="151" height="38" /></a>
       <nav class="header__nav">
         <a href="#">Inicio</a>
         <a href="#trabajo">Trabajos</a>
@@ -224,19 +224,16 @@
   <section class="hero">
     <div class="hero__overlay"></div>
     <div class="hero__floaters">
-      <img class="tool-icon" src="real-icons/photoshop.png" style="top:5%; left:60%; width:64px; height:64px; --rotate:-8deg; --amp:16px; --scale-peak:1.05; --opacity-peak:0.9; animation-duration:5.5s; animation-delay:0s;" />
-      <img class="tool-icon" src="real-icons/davinci.png" style="top:10%; left:88%; width:40px; height:40px; --rotate:5deg; --amp:9px; --scale-peak:1.04; --opacity-peak:0.85; animation-duration:6.8s; animation-delay:0.9s;" />
-      <img class="tool-icon" src="real-icons/ilustrator.png" style="top:34%; left:82%; width:58px; height:58px; --rotate:6deg; --amp:10px; --scale-peak:1.03; --opacity-peak:0.85; animation-duration:7.2s; animation-delay:0.4s;" />
-      <img class="tool-icon" src="real-icons/comfyui.png" style="top:42%; left:58%; width:42px; height:42px; --rotate:-6deg; --amp:11px; --scale-peak:1.04; --opacity-peak:0.86; animation-duration:7.8s; animation-delay:2.1s;" />
-      <img class="tool-icon" src="real-icons/after-effects.png" style="top:58%; left:92%; width:54px; height:54px; --rotate:-5deg; --amp:13px; --scale-peak:1.06; --opacity-peak:0.92; animation-duration:6.4s; animation-delay:1s;" />
-      <img class="tool-icon" src="real-icons/xcode.png" style="top:70%; left:66%; width:44px; height:44px; --rotate:7deg; --amp:12px; --scale-peak:1.05; --opacity-peak:0.88; animation-duration:6s; animation-delay:1.3s;" />
-      <img class="tool-icon" src="real-icons/premiere.png" style="top:82%; left:86%; width:48px; height:48px; --rotate:4deg; --amp:9px; --scale-peak:1.04; --opacity-peak:0.88; animation-duration:8s; animation-delay:1.6s;" />
+      <span class="tool-icon-wrap" style="top:5%; left:60%; width:64px; height:64px; --rotate:-8deg; --amp:16px; --scale-peak:1.05; --opacity-peak:0.9; animation-duration:5.5s; animation-delay:0s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/photoshop.png" /></span>
+      <span class="tool-icon-wrap" style="top:10%; left:88%; width:40px; height:40px; --rotate:5deg; --amp:9px; --scale-peak:1.04; --opacity-peak:0.85; animation-duration:6.8s; animation-delay:0.9s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/davinci.png" /></span>
+      <span class="tool-icon-wrap" style="top:34%; left:82%; width:58px; height:58px; --rotate:6deg; --amp:10px; --scale-peak:1.03; --opacity-peak:0.85; animation-duration:7.2s; animation-delay:0.4s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/ilustrator.png" /></span>
+      <span class="tool-icon-wrap" style="top:42%; left:58%; width:42px; height:42px; --rotate:-6deg; --amp:11px; --scale-peak:1.04; --opacity-peak:0.86; animation-duration:7.8s; animation-delay:2.1s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/comfyui.png" /></span>
+      <span class="tool-icon-wrap" style="top:58%; left:92%; width:54px; height:54px; --rotate:-5deg; --amp:13px; --scale-peak:1.06; --opacity-peak:0.92; animation-duration:6.4s; animation-delay:1s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/after-effects.png" /></span>
+      <span class="tool-icon-wrap" style="top:70%; left:66%; width:44px; height:44px; --rotate:7deg; --amp:12px; --scale-peak:1.05; --opacity-peak:0.88; animation-duration:6s; animation-delay:1.3s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/xcode.png" /></span>
+      <span class="tool-icon-wrap" style="top:82%; left:86%; width:48px; height:48px; --rotate:4deg; --amp:9px; --scale-peak:1.04; --opacity-peak:0.88; animation-duration:8s; animation-delay:1.6s;"><span class="tool-icon-glow"></span><img class="tool-icon" src="real-icons/premiere.png" /></span>
     </div>
     <div class="hero__inner">
       <div class="hero__copy">
-        <div class="logo-badge">
-          <img src="../public/logos/tyspace-color-transparente.svg" alt="TY SPACE" width="208" height="52" />
-        </div>
         <h1 class="hero__title">
           <span>Diseño que</span>
           <span class="hero__title-line--accent">conecta ideas</span>
@@ -474,14 +471,11 @@
         <div>
           <p class="eyebrow">Blog</p>
           <h2 class="blog__title">
-            <span class="blog__title-line">Lo que vamos aprendiendo,</span>
-            <span class="blog__title-line blog__title-line--accent">lo compartimos.</span>
+            <span class="blog__title-line">Todo se comparte</span>
           </h2>
           <p class="blog__subtitle">
-            Acá muestro algunos de mis trabajos y también comparto
-            información sobre temas relacionados con el diseño,
-            inteligencia artificial, mi forma de trabajar, las herramientas
-            que uso y mucho más.
+            Acá comparto información sobre, diseño, inteligencia artificial,
+            las herramientas que uso en mi día a día y mucho más.
           </p>
         </div>
         <a href="/blog" class="blog__cta">Ver todo el blog →</a>

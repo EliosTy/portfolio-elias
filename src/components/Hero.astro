@@ -22,26 +22,24 @@ const tools = [
 
   <div class="hero__floaters" aria-hidden="true">
     {tools.map((tool) => (
-      <img
-        class="tool-icon"
-        src={`/images/icons/${tool.file}`}
-        alt=""
-        width={tool.size}
-        height={tool.size}
+      <span
+        class="tool-icon-wrap"
         style={`top:${tool.top}; left:${tool.left}; width:${tool.size}px; height:${tool.size}px; --rotate:${tool.rotate}; --amp:${tool.amp}; --scale-peak:${tool.scalePeak}; --opacity-peak:${tool.opacityPeak}; animation-duration:${tool.duration}; animation-delay:${tool.delay};`}
-      />
+      >
+        <span class="tool-icon-glow"></span>
+        <img
+          class="tool-icon"
+          src={`/images/icons/${tool.file}`}
+          alt=""
+          width={tool.size}
+          height={tool.size}
+        />
+      </span>
     ))}
   </div>
 
   <div class="hero__inner container">
     <div class="hero__copy">
-      <div class="logo-badge" aria-hidden="true">
-        <!-- Wordmark real de la marca "TY SPACE" a color (público en
-             /logos/tyspace-color-transparente.svg) — TY en verde lima,
-             SPACE en blanco, fondo transparente. -->
-        <img src="/logos/tyspace-color-transparente.svg" alt="TY SPACE" width="208" height="52" />
-      </div>
-
       <h1 class="hero__title">
         <span class="hero__title-line">Diseño que</span>
         <span class="hero__title-line hero__title-line--accent">conecta ideas</span>
@@ -107,27 +105,59 @@ const tools = [
     pointer-events: none;
   }
 
-  /* glow violeta intenso para que los íconos se despeguen del banner en
-     vez de perderse contra la foto — capas de drop-shadow superpuestas
-     simulan el halo (un tono lavanda más claro en el centro, el violeta
-     de la marca en el medio, uno más oscuro afuera), más la sombra oscura
-     de abajo que les da profundidad. El glow "respira" — crece y se
-     achica suavemente — como parte del mismo ciclo de flotado. */
-  .tool-icon {
+  /* --- optimizado para rendimiento ---
+     antes el halo violeta se hacía con 4 capas de drop-shadow apiladas y
+     ANIMADAS (interpolando blur/opacidad en cada cuadro, sobre la silueta
+     alfa del PNG) — eso es carísimo de recalcular con 7 íconos a la vez
+     en bucle infinito, y es lo que causaba el problema de rendimiento.
+
+     ahora el halo es un simple gradiente radial (`.tool-icon-glow`) detrás
+     del ícono: no usa `filter`, así que el navegador solo tiene que
+     pintarlo una vez y después moverlo con el GPU (transform/opacity),
+     igual de liviano que mover una imagen sola. El movimiento (rotar,
+     flotar, escalar) ahora vive en el contenedor `.tool-icon-wrap`, y
+     tanto el ícono como su halo se mueven juntos dentro de él. */
+  .tool-icon-wrap {
     position: absolute;
-    /* rgba fijo en vez de color-mix(): mismo resultado visual pero sin
-       depender de una función CSS más nueva que puede no renderizar en
-       algunos navegadores/versiones. */
-    filter: drop-shadow(0 0 6px rgba(196, 148, 255, 0.85))
-      drop-shadow(0 0 18px rgba(157, 77, 255, 0.7))
-      drop-shadow(0 0 32px rgba(124, 58, 237, 0.55))
-      drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
+    display: block;
     transform: rotate(var(--rotate));
+    transform-origin: center;
     animation-name: float;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
+    will-change: transform, opacity;
     /* duration y delay los pone cada ícono por style inline, así no se
        mueven todos igual ni al mismo tiempo */
+  }
+
+  .tool-icon-glow {
+    position: absolute;
+    /* tercer intento: un radial-gradient hecho a mano (con "stops" fijos)
+       puede mostrar bandas o un borde definido según cómo lo renderice
+       cada pantalla/navegador — es difícil de afinar a ciegas. En vez de
+       eso usamos box-shadow con blur: es la sombra nativa del navegador,
+       ya viene resuelta para difuminarse de forma pareja sin bandas ni
+       bordes, y al no depender de la silueta en alfa del PNG (como sí
+       hace drop-shadow) es mucho más barata de calcular. border-radius
+       acá le da a la sombra la misma forma redondeada que ya tienen los
+       íconos (cuadrado con esquinas curvas), así el halo queda pegado a
+       su silueta real en vez de ser un cuadrado perfecto. */
+    inset: 0;
+    z-index: 0;
+    border-radius: 22%;
+    box-shadow:
+      0 0 10px 1px rgba(196, 148, 255, 0.4),
+      0 0 20px 4px rgba(178, 112, 255, 0.22),
+      0 0 32px 6px rgba(157, 77, 255, 0.12);
+    pointer-events: none;
+  }
+
+  .tool-icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   @keyframes float {
@@ -135,18 +165,10 @@ const tools = [
     100% {
       transform: rotate(var(--rotate)) translateY(0) scale(1);
       opacity: 1;
-      filter: drop-shadow(0 0 6px rgba(196, 148, 255, 0.85))
-        drop-shadow(0 0 18px rgba(157, 77, 255, 0.7))
-        drop-shadow(0 0 32px rgba(124, 58, 237, 0.55))
-        drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
     }
     50% {
       transform: rotate(var(--rotate)) translateY(calc(-1 * var(--amp))) scale(var(--scale-peak));
       opacity: var(--opacity-peak);
-      filter: drop-shadow(0 0 9px rgba(196, 148, 255, 0.95))
-        drop-shadow(0 0 26px rgba(157, 77, 255, 0.85))
-        drop-shadow(0 0 44px rgba(124, 58, 237, 0.7))
-        drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
     }
   }
 
@@ -161,17 +183,6 @@ const tools = [
 
   .hero__copy {
     max-width: 620px;
-  }
-
-  .logo-badge {
-    margin-bottom: 32px;
-  }
-
-  /* ajuste óptico: visualmente el wordmark se percibe corrido a la
-     derecha aunque esté alineado en la grilla, así que lo compensamos
-     corriéndolo un 15% de su propio ancho hacia la izquierda. */
-  .logo-badge img {
-    transform: translateX(-13%);
   }
 
   .hero__title {
@@ -250,7 +261,7 @@ const tools = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tool-icon {
+    .tool-icon-wrap {
       animation: none;
     }
   }
