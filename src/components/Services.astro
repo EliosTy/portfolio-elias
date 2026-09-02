@@ -91,12 +91,24 @@ import { services } from "../data/services.js";
        formulario de contacto (definido una sola vez en global.css como
        --cta-accent) */
     --services-accent: var(--cta-accent);
-    /* mismos dorado/cian que usan las secciones "Branding Creativo" y
-       "Motion Creativo" de arriba, para que la tarjeta de cada plan se
-       sienta parte de la misma sección. El Plan Premium no usa ninguno de
-       los dos — sigue con el violeta genérico de siempre. */
-    --gold-accent: #d4af37;
-    --cyan-accent: #29d3ff;
+    /* sin marcos: cada tarjeta es un panel de color plano, igual que las
+       secciones "Branding Creativo" (ServicesIntro.astro) y "Motion
+       Creativo" (MotionIntro.astro) de más arriba — mismos colores
+       exactos que esas dos, para que las tarjetas se sientan parte de la
+       misma sección. Como el dorado y el lima son colores claros,
+       necesitan texto oscuro (ink) para tener contraste, igual que ya
+       resuelven esas dos secciones; el índigo de Motion es oscuro, así
+       que ahí el texto claro del tema sigue funcionando. El Plan Premium
+       no tiene una sección propia arriba, así que usa el lima de la
+       marca (--accent-2) con el mismo criterio. */
+    --branding-bg: #f3c000;
+    --branding-ink: #1a1200;
+    --branding-muted: #5c4a12;
+    --motion-bg: #3c4799;
+    --motion-muted: #c3c9ec;
+    --premium-bg: #a6ff2e;
+    --premium-ink: #16240a;
+    --premium-muted: #45591f;
   }
 
   .services__header {
@@ -137,17 +149,14 @@ import { services } from "../data/services.js";
 
   .service-card {
     position: relative;
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--accent);
+    /* sin marcos: nada de border acá, el color plano de fondo es lo que
+       define la tarjeta. */
     border-radius: 16px;
     padding: 28px;
-    /* relleno plano (un solo color, sin degradé) tiñendo el fondo base
-       hacia el color de la categoría. */
-    background: color-mix(in srgb, var(--accent) 20%, var(--bg-elevated));
     display: flex;
     flex-direction: column;
     gap: 4px;
-    transition: opacity 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
   }
 
   /* al pasar el mouse por la grilla, la tarjeta apuntada se resalta y las
@@ -157,97 +166,101 @@ import { services } from "../data/services.js";
   }
 
   .service-card:hover {
-    border-color: var(--accent-2);
-    border-top-color: var(--accent-2);
     transform: translateY(-4px);
+    filter: brightness(1.06);
   }
 
-  /* tarjeta de Branding — dorado en vez del violeta genérico: franja
-     superior, ícono, checks, botón y borde en hover, todo en
-     --gold-accent (color plano, sin degradé). */
+  /* tarjeta de Branding — mismo dorado plano que la sección "Branding
+     Creativo" de arriba. Como es un color claro, título/descripción/
+     íconos usan tinta oscura propia (--branding-ink / --branding-muted)
+     en vez de los tokens claros del tema. */
   .service-card--gold {
-    border-top-color: var(--gold-accent);
-    background: color-mix(in srgb, var(--gold-accent) 20%, var(--bg-elevated));
+    background: var(--branding-bg);
   }
 
-  .service-card--gold:hover {
-    border-color: var(--gold-accent);
-    border-top-color: var(--gold-accent);
+  .service-card--gold .service-card__title,
+  .service-card--gold .service-card__price {
+    color: var(--branding-ink);
   }
 
-  .service-card--gold .service-card__icon {
-    border-color: var(--gold-accent);
-    color: var(--gold-accent);
+  .service-card--gold .service-card__description,
+  .service-card--gold .service-card__price span,
+  .service-card--gold .service-card__price--consult {
+    color: var(--branding-muted);
   }
 
+  .service-card--gold .service-card__items li {
+    color: var(--branding-ink);
+  }
+
+  .service-card--gold .service-card__icon,
   .service-card--gold .check-icon {
-    border-color: var(--gold-accent);
-    color: var(--gold-accent);
+    border-color: var(--branding-ink);
+    color: var(--branding-ink);
   }
 
-  .service-card--gold .service-card__cta {
-    background: var(--gold-accent);
-    border-color: var(--gold-accent);
-    color: #170f2c;
+  .service-card--gold .service-card__line {
+    background: color-mix(in srgb, var(--branding-ink) 20%, transparent);
   }
 
-  .service-card--gold .service-card__cta:hover {
-    background: var(--gold-accent);
-    border-color: var(--gold-accent);
-    color: #170f2c;
-    opacity: 0.85;
-  }
-
-  /* tarjeta de Motion — mismo tratamiento pero con --cyan-accent. */
+  /* tarjeta de Motion — mismo índigo plano que "Motion Creativo". Es un
+     color oscuro, así que el texto claro del tema sigue funcionando;
+     solo el "muted" usa el tono frío propio de esa sección. */
   .service-card--cyan {
-    border-top-color: var(--cyan-accent);
-    background: color-mix(in srgb, var(--cyan-accent) 20%, var(--bg-elevated));
+    background: var(--motion-bg);
   }
 
-  .service-card--cyan:hover {
-    border-color: var(--cyan-accent);
-    border-top-color: var(--cyan-accent);
+  .service-card--cyan .service-card__description,
+  .service-card--cyan .service-card__price span,
+  .service-card--cyan .service-card__price--consult {
+    color: var(--motion-muted);
   }
 
-  .service-card--cyan .service-card__icon {
-    border-color: var(--cyan-accent);
-    color: var(--cyan-accent);
-  }
-
+  .service-card--cyan .service-card__icon,
   .service-card--cyan .check-icon {
-    border-color: var(--cyan-accent);
-    color: var(--cyan-accent);
+    border-color: #fff;
+    color: #fff;
   }
 
-  .service-card--cyan .service-card__cta {
-    background: var(--cyan-accent);
-    border-color: var(--cyan-accent);
-    color: #0b0616;
+  .service-card--cyan .service-card__line {
+    background: color-mix(in srgb, #fff 20%, transparent);
   }
 
-  .service-card--cyan .service-card__cta:hover {
-    background: var(--cyan-accent);
-    border-color: var(--cyan-accent);
-    color: #0b0616;
-    opacity: 0.85;
-  }
-
-  /* el plan destacado usa el mismo fondo plano que las demás, pero se
-     distingue por un borde sólido en --accent-2 (antes era un degradé
-     verde/blanco). Se agranda un 13% y sube de z-index para resaltar
-     sobre las demás. */
+  /* el plan destacado usa el lima de la marca como color plano — el
+     mismo criterio que gold/cyan (color claro → tinta oscura propia). Se
+     agranda un 13% y sube de z-index para resaltar sobre las demás. */
   .service-card--highlight {
-    border: 2px solid var(--accent-2);
-    border-top: 3px solid var(--accent-2);
     padding: 34px 32px;
-    background: color-mix(in srgb, var(--accent-2) 18%, var(--bg-elevated));
+    background: var(--premium-bg);
     transform: scale(1.13);
     transform-origin: center;
     z-index: 2;
   }
 
-  .service-card--highlight .service-card__title {
+  .service-card--highlight .service-card__title,
+  .service-card--highlight .service-card__price {
+    color: var(--premium-ink);
     font-size: 19px;
+  }
+
+  .service-card--highlight .service-card__price {
+    font-size: 28px;
+  }
+
+  .service-card--highlight .service-card__description,
+  .service-card--highlight .service-card__price span,
+  .service-card--highlight .service-card__price--consult {
+    color: var(--premium-muted);
+  }
+
+  .service-card--highlight .service-card__items li {
+    color: var(--premium-ink);
+  }
+
+  .service-card--highlight .service-card__icon,
+  .service-card--highlight .check-icon {
+    border-color: var(--premium-ink);
+    color: var(--premium-ink);
   }
 
   .service-card--highlight .service-card__icon {
@@ -255,19 +268,23 @@ import { services } from "../data/services.js";
     height: 44px;
   }
 
+  .service-card--highlight .service-card__line {
+    background: color-mix(in srgb, var(--premium-ink) 20%, transparent);
+  }
+
   .service-card--highlight:hover {
-    border-color: var(--accent-2);
     transform: scale(1.13) translateY(-4px);
   }
 
   /* la etiqueta va dentro del padding de la tarjeta (no montada sobre el
-     borde), así nunca queda cortada. */
+     borde), así nunca queda cortada. Va en tinta oscura sobre un chip
+     claro para que se lea sobre el lima de fondo. */
   .service-card__badge {
     position: relative;
     display: inline-block;
     align-self: flex-start;
-    background: var(--accent-2);
-    color: var(--bg);
+    background: var(--premium-ink);
+    color: var(--premium-bg);
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
@@ -294,8 +311,8 @@ import { services } from "../data/services.js";
     height: 40px;
     flex-shrink: 0;
     border-radius: 50%;
-    border: 1px solid var(--accent-2);
-    color: var(--accent-2);
+    border: 1px solid currentColor;
+    color: var(--text);
   }
 
   .service-card__title {
@@ -319,6 +336,7 @@ import { services } from "../data/services.js";
     font-size: 28px;
     font-weight: 700;
     margin: 20px 0 0;
+    color: var(--text);
   }
 
   .service-card__price span {
@@ -338,7 +356,7 @@ import { services } from "../data/services.js";
 
   .service-card__line {
     height: 1px;
-    background: var(--border);
+    background: color-mix(in srgb, var(--text) 20%, transparent);
     margin: 20px 0;
   }
 
