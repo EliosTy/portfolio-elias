@@ -1,0 +1,84 @@
+---
+const { post } = Astro.props;
+---
+
+<a href={post.link || "#"} class="post-card">
+  <div class="post-card__image">
+    <img src={post.image} alt={post.title} loading="lazy" />
+  </div>
+  <div class="post-card__body">
+    <p class="post-card__date">{post.date}</p>
+    <h3 class="post-card__title">{post.title}</h3>
+    <p class="post-card__excerpt">{post.excerpt}</p>
+    <span class="post-card__link">Leer →</span>
+  </div>
+</a>
+
+<style>
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .post-card:hover {
+    border-color: var(--accent-2);
+    transform: translateY(-4px);
+  }
+
+  .post-card__image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .post-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .post-card:hover .post-card__image img {
+    transform: scale(1.05);
+  }
+
+  .post-card__body {
+    padding: 22px 22px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .post-card__date {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .post-card__title {
+    font-size: 18px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .post-card__excerpt {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 2px 0 6px;
+  }
+
+  .post-card__link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-2);
+    margin-top: auto;
+  }
+</style>

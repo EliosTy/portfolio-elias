@@ -1,13 +1,8 @@
 ---
 // sección "Sobre mí" — título arriba a todo el ancho, y debajo una
-// grilla de 2 columnas: foto a la izquierda, texto a la derecha. Donde
-// en la referencia iba un botón ("conoce al equipo"), acá van los 3
-// datos (años/proyectos/clientes).
-const stats = [
-  { value: "+6", label: "años de experiencia" },
-  { value: "+42", label: "proyectos realizados" },
-  { value: "+14", label: "clientes" },
-];
+// grilla de 2 columnas: foto a la izquierda, texto a la derecha. Los
+// datos de años/proyectos/clientes viven en Experience.astro (sección
+// aparte, con contador animado) para no duplicarlos acá.
 ---
 
 <section class="about section" id="sobre-mi">
@@ -33,15 +28,6 @@ const stats = [
         </p>
 
         <p class="about__signoff">Gracias por el espacio :)</p>
-
-        <div class="about__stats">
-          {stats.map((stat, i) => (
-            <>
-              {i > 0 && <span class="about__stats-dot" aria-hidden="true">•</span>}
-              <span><strong>{stat.value}</strong> {stat.label}</span>
-            </>
-          ))}
-        </div>
       </div>
     </div>
   </div>
@@ -92,27 +78,6 @@ const stats = [
   .about__signoff {
     color: var(--accent-2);
     font-style: italic;
-  }
-
-  .about__stats {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    margin-top: 28px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-
-  .about__stats strong {
-    color: var(--accent-2);
-    font-family: var(--font-display);
-  }
-
-  .about__stats-dot {
-    color: var(--border);
   }
 
   @media (max-width: 720px) {
