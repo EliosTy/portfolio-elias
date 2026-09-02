@@ -7,25 +7,43 @@
 
 <section class="about section" id="sobre-mi">
   <div class="container">
-    <h2 class="about__title">Ty Space es todo.</h2>
-
     <div class="about__grid">
       <div class="about__photo">
         <img src="/about/foto-elias.png" alt="Foto de Elias" width="900" height="900" loading="lazy" />
       </div>
 
       <div class="about__body">
-        <p class="eyebrow">Elias Villarruel</p>
+        <h2 class="about__title">
+          <img
+            src="/logos/tyspace-slogan.svg"
+            alt="TySpace — Diseño gráfico y branding"
+            width="340"
+            height="85"
+            loading="lazy"
+          />
+        </h2>
 
-        <p>TySpace nació como un espacio donde las personas le dan vida a las ideas.</p>
+        <p class="eyebrow about__eyebrow">Elias Villarruel</p>
+
+        <p>Hay ideas que solo necesitan un lugar para empezar.</p>
 
         <p>
-          TY es una abreviatura en inglés de la frase "Thank you", que
-          significa "gracias". SPACE lo es todo: desde el espacio donde
-          están las estrellas y nacen las ideas, hasta el espacio de trabajo
-          e incluso ese espacio que las personas se dan para trabajar
-          juntos.
+          <span class="about__highlight">TY</span> significa <span class="about__highlight">Thank You</span>.
+          Agradecer lo que nos inspira, las oportunidades que nos impulsan y
+          a quienes hacen posible cada proyecto.
         </p>
+
+        <p>
+          <span class="about__highlight">SPACE</span> es el lugar donde todo
+          empieza. Una pantalla. Una conversación. Una hoja en blanco. Un
+          proyecto.
+        </p>
+
+        <p>Porque crear también es compartir.</p>
+
+        <p>Y cuando compartimos, las ideas pueden ir más lejos.</p>
+
+        <p><span class="about__highlight">TySpace</span>.</p>
 
         <p class="about__signoff">Gracias por el espacio :)</p>
       </div>
@@ -35,16 +53,33 @@
 
 <style>
   .about__title {
-    font-size: clamp(28px, 4.5vw, 42px);
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    max-width: 24ch;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+  }
+
+  .about__title img {
+    width: clamp(240px, 30vw, 380px);
+    height: auto;
+    /* corrida a la izquierda: queda mejor alineado visualmente con el
+       resto del bloque de texto que tiene debajo. */
+    transform: translateX(-10%);
+  }
+
+  .about__eyebrow {
+    color: var(--cta-accent);
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .about__highlight {
+    color: var(--accent-2);
   }
 
   .about__grid {
     display: grid;
-    grid-template-columns: 340px 1fr;
+    /* la columna de foto crece un poco (antes 340px) para acompañar la
+       altura extra que ahora suma el logo arriba del nombre. */
+    grid-template-columns: 400px 1fr;
     gap: 48px;
     align-items: start;
   }
@@ -65,7 +100,7 @@
     object-fit: cover;
   }
 
-  .about__body p {
+  .about__body p:not(.eyebrow) {
     font-size: 17px;
     color: var(--text-muted);
     max-width: 60ch;
@@ -86,7 +121,7 @@
     }
 
     .about__photo {
-      max-width: 340px;
+      max-width: 400px;
       margin: 0 auto;
     }
   }
