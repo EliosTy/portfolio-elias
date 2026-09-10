@@ -37,21 +37,24 @@ const CONTACT_EMAIL = "tu@email.com";
        padding propio de .contact__inner). Se achica bastante para que
        el bloque ocupe menos alto. */
     padding: 40px 0;
-    /* mismo efecto que la sección de Clientes: verde oscuro plano (22%
-       de --accent-2 mezclado con negro) más un ruido sutil al 4%, en vez
-       del verde lima liso que tenía antes. El formulario en sí (inputs,
-       textarea, botón Enviar) no cambia, sigue con su propio fondo
-       oscuro de siempre. Al ser un verde oscuro, el texto claro del tema
-       (--text, --text-muted) vuelve a funcionar bien, así que ya no hace
-       falta la tinta oscura que usábamos con el lima. */
-    background: color-mix(in srgb, var(--accent-2) 22%, #000000);
+    /* sigue siendo el mismo verde de la marca, pero ya no plano: un
+       degradé de ese mismo verde a un tono bien oscuro (nada de blanco
+       ni otros colores de por medio) le da algo de profundidad, como una
+       superficie iluminada de costado en vez de un color sólido sin
+       volumen. El formulario en sí (inputs, textarea, botón Enviar) no
+       cambia. */
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--accent-2) 32%, #000000) 0%,
+      color-mix(in srgb, var(--accent-2) 10%, #000000) 100%
+    );
   }
 
   .contact__noise {
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.04;
+    opacity: 0.09;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
@@ -100,16 +103,16 @@ const CONTACT_EMAIL = "tu@email.com";
     padding: 12px 14px;
     border-radius: 10px;
     border: 1px solid var(--border);
-    background: #f6f3bb;
-    /* el fondo pasó a un crema claro, así que el texto necesita tinta
-       oscura propia en vez del --text claro del tema (quedaba invisible). */
-    color: #2a2410;
+    background: #ececec;
+    /* el fondo es un gris claro, así que el texto necesita tinta oscura
+       propia en vez del --text claro del tema (quedaba invisible). */
+    color: #1a1a1a;
     resize: vertical;
   }
 
   .field input::placeholder,
   .field textarea::placeholder {
-    color: color-mix(in srgb, #2a2410 55%, transparent);
+    color: color-mix(in srgb, #1a1a1a 55%, transparent);
   }
 
   .field input:focus,

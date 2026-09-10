@@ -25,23 +25,25 @@ import { clients } from "../data/clients.js";
     position: relative;
     overflow: hidden;
     padding: 56px 0;
-    /* color plano, sin degradé ni manchas negras en las esquinas — el
-       mismo verde oscuro que antes tenía el gradiente en su tramo medio
-       (22% de --accent-2 mezclado con negro), ahora parejo en toda la
-       sección. Al ser un verde oscuro, el texto claro del tema (--text,
-       --text-muted) sigue funcionando bien, como antes. */
-    background: color-mix(in srgb, var(--accent-2) 22%, #000000);
+    /* mismo degradé (y mismo ruido) que la sección de Contacto: el verde
+       de la marca yendo a un tono bien oscuro, en vez del color plano
+       de antes — para que las dos secciones oscuras del sitio compartan
+       el mismo tratamiento. */
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--accent-2) 32%, #000000) 0%,
+      color-mix(in srgb, var(--accent-2) 10%, #000000) 100%
+    );
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
   }
 
-  /* ruido sutil (4%) sobre el color, para que la superficie no se vea
-     perfectamente lisa. */
+  /* ruido al 9%, igual que en Contacto. */
   .clients__noise {
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.04;
+    opacity: 0.09;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
@@ -72,8 +74,12 @@ import { clients } from "../data/clients.js";
     align-items: center;
     justify-content: center;
     height: 72px;
+    overflow: hidden;
     /* fondo levemente más oscuro que el verde de la sección, así cada
-       chip se distingue como tarjeta en vez de mezclarse con el fondo */
+       chip se distingue como tarjeta en vez de mezclarse con el fondo.
+       El gris/apagado y el efecto hover van en la imagen o el texto de
+       adentro (ver más abajo), no acá, para que el fondo y el borde de
+       la tarjeta no se vean afectados al pasar el mouse. */
     background: color-mix(in srgb, var(--bg) 55%, transparent);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -81,13 +87,28 @@ import { clients } from "../data/clients.js";
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 14px;
+  }
+
+  .clients__logo img,
+  .clients__logo span {
     filter: grayscale(1);
     opacity: 0.7;
+    transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
   }
 
   .clients__logo img {
     max-height: 44px;
     max-width: 80%;
+  }
+
+  /* al pasar el mouse: el logo se agranda un 10% y pasa a blanco puro
+     (antes quedaba en gris apagado) — brightness(0) lo lleva a negro sin
+     importar su color original y invert(1) lo pasa a blanco. */
+  .clients__logo:hover img,
+  .clients__logo:hover span {
+    transform: scale(1.1);
+    filter: brightness(0) invert(1);
+    opacity: 1;
   }
 
   @media (max-width: 720px) {
