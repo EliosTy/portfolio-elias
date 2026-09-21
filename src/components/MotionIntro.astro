@@ -1,97 +1,17 @@
 ---
-// mismo formato que ServicesIntro.astro (Branding Creativo), pero para
-// motion. Van juntas: Branding arriba, Motion debajo, antes de "Planes y
-// servicios".
-const included = [
-  {
-    label: "Animación de logo",
-    icon: "play",
-  },
-  {
-    label: "Piezas para redes (reels, stories)",
-    icon: "reel",
-  },
-  {
-    label: "Edición de video",
-    icon: "clapper",
-  },
-  {
-    label: "Motion para eventos en vivo",
-    icon: "calendar",
-  },
-  {
-    label: "Guion y storyboard",
-    icon: "storyboard",
-  },
-];
+// mismo formato que ServicesIntro.astro (Branding), pero para motion. Van
+// juntas: Branding arriba, Motion debajo, antes de "Planes y servicios".
 ---
 
 <section class="motion-highlight">
   <div class="motion-highlight__row">
     <div class="motion-highlight__content">
-    <h2 class="motion-highlight__title">Motion Creativo</h2>
-    <p class="motion-highlight__tagline">Ideas que cobran vida.</p>
-    <p class="motion-highlight__description">
-      <!-- TODO: ajustá este texto si querés otro enfoque. -->
-      Transformo conceptos estáticos en piezas dinámicas que capturan la
-      atención — pensadas para redes, presentaciones y eventos en vivo.
-    </p>
-
-    <div class="motion-highlight__included">
-      <p class="motion-highlight__included-title">
-        Qué <span class="motion-highlight__included-title-accent">incluye</span>
+      <h2 class="motion-highlight__title">Motion Creativo</h2>
+      <p class="motion-highlight__description">
+        <!-- TODO: ajustá este texto si querés otro enfoque. -->
+        Transformo conceptos estáticos en piezas dinámicas que capturan la
+        atención — pensadas para redes, presentaciones y eventos en vivo.
       </p>
-      <div class="motion-highlight__items">
-        {included.map((item) => (
-          <div class="included-item">
-            <div class="included-item__icon">
-              {item.icon === "play" && (
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M10 8.5l6 3.5-6 3.5v-7z" fill="currentColor" stroke="none" />
-                </svg>
-              )}
-              {item.icon === "reel" && (
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <path d="M3 9h18" />
-                  <path d="M3 15h18" />
-                  <path d="M8 5v4" />
-                  <path d="M8 15v4" />
-                  <path d="M16 5v4" />
-                  <path d="M16 15v4" />
-                </svg>
-              )}
-              {item.icon === "clapper" && (
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="8" width="18" height="12" rx="1" />
-                  <path d="M3 8l1.5-4h15L21 8" />
-                  <path d="M3 8l3-4M9 8l3-4M15 8l3-4" />
-                </svg>
-              )}
-              {item.icon === "calendar" && (
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="5" width="18" height="16" rx="2" />
-                  <path d="M3 10h18" />
-                  <path d="M8 3v4" />
-                  <path d="M16 3v4" />
-                  <path d="M10.5 13.5l5 2.5-5 2.5v-5z" fill="currentColor" stroke="none" />
-                </svg>
-              )}
-              {item.icon === "storyboard" && (
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="6" width="6" height="6" rx="1" />
-                  <rect x="9" y="6" width="6" height="6" rx="1" />
-                  <rect x="16" y="6" width="6" height="6" rx="1" />
-                  <path d="M5 15v3M12 15v3M19 15v3" />
-                </svg>
-              )}
-            </div>
-            <span class="included-item__label">{item.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
     </div>
 
     <div class="motion-highlight__media">
@@ -120,8 +40,6 @@ const included = [
        vez de --text-muted (ese tiene un tinte violeta). */
     --motion-bg: #3c4799;
     --motion-muted: #c3c9ec;
-    --motion-icon-bg: color-mix(in srgb, var(--motion-bg) 45%, white);
-    --motion-icon-ink: #1b2350;
     border-bottom: 1px solid var(--border);
   }
 
@@ -136,10 +54,7 @@ const included = [
   .motion-highlight__media {
     /* estirado a todo el alto de la fila (sin margen arriba ni abajo).
        El ancho queda lo más cerca posible de ese alto real (~560px en
-       desktop normal) para que el recorte del video cuadrado sea mínimo
-       — comprimimos la caja "Qué incluye" a una sola fila de íconos
-       (ver .motion-highlight__items más abajo) para que la fila no
-       quede demasiado alta y el recorte sea casi imperceptible. */
+       desktop normal) para que el recorte del video cuadrado sea mínimo. */
     flex: 0 0 auto;
     width: min(560px, 50vw);
     align-self: stretch;
@@ -162,86 +77,15 @@ const included = [
   }
 
   .motion-highlight__title {
-    font-size: clamp(26px, 3.5vw, 36px);
+    font-size: clamp(30px, 4.2vw, 44px);
     color: #fff;
-  }
-
-  .motion-highlight__tagline {
-    font-family: var(--font-serif-italic);
-    font-style: italic;
-    font-size: clamp(20px, 2.5vw, 26px);
-    color: var(--text);
-    margin: 6px 0 0;
   }
 
   .motion-highlight__description {
-    margin: 16px 0 0;
+    margin: 18px 0 0;
     max-width: 62ch;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--motion-muted);
-  }
-
-  .motion-highlight__included {
-    margin-top: 40px;
-    border: 1px solid color-mix(in srgb, black 40%, transparent);
-    border-radius: 18px;
-    background: color-mix(in srgb, black 30%, transparent);
-    padding: 28px 32px;
-  }
-
-  .motion-highlight__included-title {
     font-size: 18px;
-    color: var(--text);
-    margin: 0 0 24px;
-  }
-
-  .motion-highlight__included-title-accent {
-    font-family: var(--font-serif-italic);
-    font-style: italic;
-    color: #fff;
-  }
-
-  .motion-highlight__items {
-    /* una sola fila en desktop (nowrap) — mantiene la caja más baja para
-       que la columna de video (ver .motion-highlight__media) no tenga
-       que estirarse tanto y el recorte del video cuadrado sea mínimo.
-       En mobile vuelve a envolver en 2 columnas (ver media query). */
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 14px;
-  }
-
-  .included-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    min-width: 0;
-    text-align: center;
-    padding: 0 8px;
-    border-left: 1px solid color-mix(in srgb, #fff 15%, transparent);
-  }
-
-  .included-item:first-child {
-    border-left: none;
-  }
-
-  .included-item__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--motion-icon-bg);
-    color: var(--motion-icon-ink);
-  }
-
-  .included-item__label {
-    font-size: 13px;
+    line-height: 1.65;
     color: var(--motion-muted);
   }
 
@@ -260,16 +104,6 @@ const included = [
     .motion-highlight__content {
       max-width: none;
       padding: 40px 24px;
-    }
-
-    .motion-highlight__items {
-      justify-content: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .included-item {
-      border-left: none;
-      min-width: 45%;
     }
   }
 </style>

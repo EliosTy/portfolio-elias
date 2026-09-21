@@ -56,10 +56,14 @@ import { clients } from "../data/clients.js";
 
   .clients__label {
     text-align: center;
-    font-size: 12px;
+    font-family: var(--font-display);
+    /* mismo tamaño, peso y tracking que "Planes y servicios"
+       (.services__title en Services.astro). */
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-muted);
+    color: #fff;
     margin-bottom: 32px;
   }
 
@@ -83,10 +87,14 @@ import { clients } from "../data/clients.js";
     background: color-mix(in srgb, var(--bg) 55%, transparent);
     border: 1px solid var(--border);
     border-radius: 10px;
-    color: var(--text-muted);
+    /* texto en blanco y bold, con la misma tipografía que los títulos de
+       Servicios (var(--font-display), Hyperspace Race), para que se lea
+       con claridad sobre el fondo verde. */
+    color: #fff;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.01em;
   }
 
   .clients__logo img,

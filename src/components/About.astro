@@ -13,28 +13,18 @@
       </div>
 
       <div class="about__body">
-        <h2 class="about__title">
-          <img
-            src="/logos/tyspace-slogan.svg"
-            alt="TySpace — Potenciá tu marca"
-            width="352"
-            height="85"
-            loading="lazy"
-          />
-        </h2>
-
         <p class="eyebrow about__eyebrow">Elias Villarruel</p>
 
         <p>Hay ideas que solo necesitan un lugar para empezar.</p>
 
         <p>
-          <span class="about__highlight">TY</span> significa <span class="about__highlight">Thank You</span>.
+          TY significa Thank You.
           Agradecer lo que nos inspira, las oportunidades que nos impulsan y
           a quienes hacen posible cada proyecto.
         </p>
 
         <p>
-          <span class="about__highlight">SPACE</span> es el lugar donde todo
+          SPACE es el lugar donde todo
           empieza. Una pantalla. Una conversación. Una hoja en blanco. Un
           proyecto.
         </p>
@@ -43,8 +33,6 @@
 
         <p>Y cuando compartimos, las ideas pueden ir más lejos.</p>
 
-        <p><span class="about__highlight">TySpace</span>.</p>
-
         <p class="about__signoff">Gracias por el espacio :)</p>
       </div>
     </div>
@@ -52,18 +40,6 @@
 </section>
 
 <style>
-  .about__title {
-    margin-bottom: 24px;
-  }
-
-  .about__title img {
-    width: clamp(240px, 30vw, 380px);
-    height: auto;
-    /* corrida a la izquierda: queda mejor alineado visualmente con el
-       resto del bloque de texto que tiene debajo. */
-    transform: translateX(-10%);
-  }
-
   .about__eyebrow {
     color: var(--cta-accent);
     font-size: clamp(18px, 2.4vw, 24px);
@@ -71,14 +47,8 @@
     margin-bottom: 20px;
   }
 
-  .about__highlight {
-    color: var(--accent-2);
-  }
-
   .about__grid {
     display: grid;
-    /* la columna de foto crece un poco (antes 340px) para acompañar la
-       altura extra que ahora suma el logo arriba del nombre. */
     grid-template-columns: 400px 1fr;
     gap: 48px;
     align-items: start;
