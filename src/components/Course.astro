@@ -1,0 +1,137 @@
+---
+// sección del curso — va entre "Planes y servicios" y el Blog. Foto del
+// curso a la izquierda, texto y botón a la derecha. La foto vive en
+// /public/curso/curso-ia.jpg (reemplazala ahí si cambia la portada) y el
+// botón lleva a la página del curso en Hotmart.
+const courseUrl =
+  "https://hotmart.com/product/impulsa-tu-negocio-con-la-inteligencia-artificial-guia-para-emprendedores/S107775825Y";
+---
+
+<section class="course section" id="curso">
+  <div class="container">
+    <div class="course__grid">
+      <div class="course__media">
+        <img
+          src="/curso/curso-ia.jpg"
+          alt="Curso Impulsa Tu Negocio con la Inteligencia Artificial: guía para emprendedores"
+          width="1200"
+          height="1200"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="course__body">
+        <h2 class="course__title">
+          Impulsa Tu Negocio con la Inteligencia Artificial: Guía para Emprendedores
+        </h2>
+
+        <p>
+          Un curso pensado para emprendedores y pequeños negocios que quieren
+          aprovechar la Inteligencia Artificial, pero no saben por dónde
+          empezar.
+        </p>
+
+        <p>
+          Aprendé a usar IA de forma simple y práctica, sin necesidad de saber
+          de diseño, programación ni tecnología.
+        </p>
+
+        <p>
+          La propuesta es que puedas crear diseños con personalidad, en lugar
+          de repetir las mismas imágenes y estilos que genera todo el mundo.
+        </p>
+
+        <p>
+          Aprendé a usar la IA como una herramienta creativa para potenciar la
+          identidad de tu marca, comunicar mejor tus ideas y crear contenido
+          que realmente se sienta propio.
+        </p>
+
+        <a
+          href={courseUrl}
+          class="btn btn-primary course__cta"
+          target="_blank"
+          rel="noopener"
+        >
+          Ver el curso
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .course__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+  }
+
+  .course__media {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    /* halo violeta/lima suave, a tono con la portada del curso */
+    box-shadow:
+      0 0 80px -20px color-mix(in srgb, var(--accent) 55%, transparent),
+      0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  }
+
+  .course__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .course__title {
+    font-size: clamp(28px, 3.6vw, 42px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .course__body p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 58ch;
+  }
+
+  .course__body p + p {
+    margin-top: 16px;
+  }
+
+  /* mismo naranja / estilo que el botón del banner ("Contacto") */
+  .course__cta {
+    margin-top: 32px;
+    padding: 14px 28px;
+    background: var(--cta-accent);
+    border-color: var(--cta-accent);
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  .course__cta:hover {
+    background: var(--cta-accent);
+    border-color: var(--cta-accent);
+    color: #fff;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 860px) {
+    .course__grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .course__media {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+  }
+</style>
