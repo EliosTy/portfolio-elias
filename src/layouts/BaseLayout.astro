@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 
 interface Props {
   title?: string;
@@ -41,5 +42,8 @@ const {
   </head>
   <body>
     <slot />
+    <!-- burbuja de WhatsApp: vive en el layout para que aparezca en todas
+         las páginas (inicio, trabajos, cada proyecto y blog) -->
+    <WhatsAppButton />
   </body>
 </html>

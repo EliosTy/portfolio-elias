@@ -28,7 +28,7 @@ const categoryLabel =
   <div class="project-detail container">
     <a href="/trabajos" class="project-detail__back">← Volver a trabajos</a>
 
-    <p class="eyebrow">{categoryLabel}</p>
+    {!project.hideEyebrow && <p class="eyebrow">{categoryLabel}</p>}
     <h1 class="project-detail__title">{project.title}</h1>
 
     <div class="project-detail__meta">
@@ -39,6 +39,16 @@ const categoryLabel =
     </div>
 
     <p class="project-detail__description">{project.description}</p>
+    {project.intro && project.intro.map((paragraph: string) => (
+      <p class="project-detail__description project-detail__description--extra">{paragraph}</p>
+    ))}
+
+    {project.tools && project.tools.length > 0 && (
+      <p class="project-detail__tools">
+        <span class="project-detail__tools-label">Herramientas utilizadas:</span>
+        {project.tools.join(" · ")}
+      </p>
+    )}
 
     <div class="project-detail__media">
       {project.video ? (
@@ -56,33 +66,122 @@ const categoryLabel =
       )}
     </div>
 
-    {project.content && project.content.length > 0 && (
-      <div class="project-detail__content">
-        {project.content.map((paragraph: string) => (
-          <p>{paragraph}</p>
+    {project.sections && project.sections.length > 0 ? (
+      <div class="project-sections">
+        {project.sections.map((section: any, i: number) => (
+          <section class={`psec ${section.video ? "psec--with-video" : ""} ${i === 0 && project.facts?.length ? "psec--with-facts" : ""}`}>
+            <header class="psec__head">
+              <span class="psec__num">{String(i + 1).padStart(2, "0")} —</span>
+              <h2 class="psec__title">{section.title}</h2>
+            </header>
+
+            <div class="psec__grid">
+              {section.video && (
+                <div class="psec__video">
+                  <video
+                    src={section.video}
+                    poster={section.poster}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    data-autoplay
+                  ></video>
+                </div>
+              )}
+
+              <div class="psec__body">
+                {(section.parts ?? [section]).map((part: any) => (
+                  <div class="psec__part">
+                    {part.subtitle && <h3 class="psec__subtitle">{part.subtitle}</h3>}
+
+                    {part.paragraphs && part.paragraphs.length > 0 && (
+                      <div class="psec__text">
+                        {part.paragraphs.map((paragraph: string) => (
+                          <p>{paragraph}</p>
+                        ))}
+                      </div>
+                    )}
+
+                    {part.list && part.list.length > 0 && (
+                      <ul class="psec__list">
+                        {part.list.map((item: string) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {part.images && part.images.length > 0 && (
+                      <div class={`psec__images ${part.images.length > 1 ? "psec__images--multi" : ""}`}>
+                        {part.images.map((item: { image: string; caption?: string; alt?: string }) => (
+                          <figure class="psec__figure">
+                            <img src={item.image} alt={item.alt || item.caption || section.title} loading="lazy" />
+                            {item.caption && <figcaption>{item.caption}</figcaption>}
+                          </figure>
+                        ))}
+                      </div>
+                    )}
+
+                    {part.clips && part.clips.length > 0 && (
+                      <div class="psec__clips">
+                        {part.clips.map((clip: { src: string; caption?: string }) => (
+                          <figure class="psec__clip">
+                            <video src={clip.src} autoplay muted loop playsinline preload="metadata" data-autoplay></video>
+                            {clip.caption && <figcaption>{clip.caption}</figcaption>}
+                          </figure>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {i === 0 && project.facts && project.facts.length > 0 && (
+                <dl class="psec__facts">
+                  {project.facts.map((fact: { label: string; value: string }) => (
+                    <div>
+                      <dt>{fact.label}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </div>
+          </section>
         ))}
       </div>
-    )}
-
-    {project.clips && project.clips.length > 0 && (
-      <div class="project-detail__clips">
-        {project.clips.map((clip: string) => (
-          <div class="project-detail__clip">
-            <video src={clip} autoplay muted loop playsinline></video>
+    ) : (
+      <>
+        {project.content && project.content.length > 0 && (
+          <div class="project-detail__content">
+            {project.content.map((paragraph: string) => (
+              <p>{paragraph}</p>
+            ))}
           </div>
-        ))}
-      </div>
-    )}
+        )}
 
-    {project.gallery && project.gallery.length > 0 && (
-      <div class="project-detail__gallery">
-        {project.gallery.map((item: { image: string; caption?: string }) => (
-          <figure class="project-detail__gallery-item">
-            <img src={item.image} alt={item.caption || project.title} loading="lazy" />
-            {item.caption && <figcaption>{item.caption}</figcaption>}
-          </figure>
-        ))}
-      </div>
+        {project.clips && project.clips.length > 0 && (
+          <div class="project-detail__clips">
+            {project.clips.map((clip: string) => (
+              <div class="project-detail__clip">
+                <video src={clip} autoplay muted loop playsinline></video>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {project.gallery && project.gallery.length > 0 && (
+          <div class="project-detail__gallery">
+            {project.gallery.map((item: { image: string; caption?: string }) => (
+              <figure class="project-detail__gallery-item">
+                <img src={item.image} alt={item.caption || project.title} loading="lazy" />
+                {item.caption && <figcaption>{item.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        )}
+      </>
     )}
 
     {project.photoCredit && (
@@ -148,6 +247,25 @@ const categoryLabel =
     line-height: 1.6;
     color: var(--text-muted);
     margin: 0 0 40px;
+  }
+
+  .project-detail__description--extra {
+    margin-top: -24px;
+  }
+
+  .project-detail__tools {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    margin: -16px 0 40px;
+  }
+
+  .project-detail__tools-label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 8px;
   }
 
   .project-detail__media {
@@ -266,4 +384,277 @@ const categoryLabel =
       width: calc(50% - 10px);
     }
   }
+
+  /* ---------- páginas con secciones ---------- */
+  .project-sections {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 56px;
+  }
+
+  .psec {
+    padding: 56px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .psec__head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .psec__num {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent-2);
+  }
+
+  .psec__title {
+    font-size: clamp(24px, 3.4vw, 36px);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .psec__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  /* sección con video vertical: video a la izquierda, contenido a la derecha */
+  .psec--with-video .psec__grid {
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .psec__video {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    aspect-ratio: 9 / 16;
+    box-shadow: 0 0 80px -24px color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+
+  .psec--with-video .psec__video {
+    position: sticky;
+    top: 96px;
+  }
+
+  .psec__video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .psec__body {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    min-width: 0;
+  }
+
+  .psec__part {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .psec__subtitle {
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.25;
+    color: var(--accent-2);
+  }
+
+  .psec__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .psec__list li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .psec__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-2);
+  }
+
+  .psec__text {
+    max-width: 68ch;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .psec__text p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .psec--with-facts .psec__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .psec__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0;
+    padding: 4px 0 4px 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .psec__facts dt {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .psec__facts dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .psec__images {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .psec__images--multi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .psec__figure,
+  .psec__clip {
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+  }
+
+  .psec__figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .psec__figure figcaption,
+  .psec__clip figcaption {
+    padding: 12px 16px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .psec__clips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 286px));
+    gap: 20px;
+  }
+
+  .psec__clip video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  @media (max-width: 860px) {
+    .psec {
+      padding: 40px 0;
+    }
+
+    .psec--with-video .psec__grid,
+    .psec--with-facts .psec__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .psec__facts {
+      padding: 20px 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 24px;
+    }
+
+    .psec--with-video .psec__video {
+      position: static;
+      width: min(100%, 320px);
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .psec__images--multi {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .psec__clips {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .psec__text p {
+      font-size: 16px;
+    }
+  }
 </style>
+
+<script>
+  // los videos en loop solo corren mientras se ven en pantalla — así no
+  // gastan batería ni datos de más. Con "reducir movimiento" quedan
+  // pausados y con controles.
+  const videos = document.querySelectorAll<HTMLVideoElement>("video[data-autoplay]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduce) {
+    videos.forEach((v) => {
+      v.pause();
+      v.removeAttribute("autoplay");
+      v.controls = true;
+    });
+  } else if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    videos.forEach((v) => io.observe(v));
+  }
+</script>

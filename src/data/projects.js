@@ -50,6 +50,17 @@
 //          proceso, el desafío, cómo lo resolviste, etc. Cada string del
 //          array es un párrafo separado. Podés poner uno o varios.
 //
+// intro / tools / facts / sections: opcionales, para armar una página más
+//          completa (ver "Juntada Inconformista" como ejemplo).
+//          intro = párrafos extra del encabezado. tools = lista de
+//          herramientas ("Herramientas utilizadas"). facts = datos rápidos
+//          {label, value}. sections = bloques en orden, cada uno con title
+//          y paragraphs, y opcionalmente video + poster (video vertical),
+//          images [{image, caption, alt}], clips [{src, caption}] o "parts"
+//          (bloques con subtitle, paragraphs, list, images y clips).
+//          Si un proyecto no tiene "sections", la página usa
+//          content / clips / gallery como siempre.
+//
 // link: opcional. Si el proyecto tiene una web o red social donde se puede
 //       ver en vivo, poné el link acá — aparece como botón en la página
 //       del proyecto. Si no tiene, dejalo en null.
@@ -65,22 +76,90 @@ export const projects = [
     title: "Juntada Inconformista",
     category: "diseño",
     year: 2026,
+    // primer párrafo del encabezado (también es la descripción para buscadores)
     description:
-      "Descripción corta del proyecto: qué es, para quién lo hiciste y qué resolviste con el diseño.",
-    tags: ["Motion Graphics", "Branding"],
+      "Para la edición OPI 2.0 - 2026, trabajé en el desarrollo de videos para las pantallas del salón y las credenciales del staff.",
+    // párrafos extra del encabezado, debajo de "description"
+    intro: [
+      "El objetivo fue llevar una misma línea gráfica a diferentes soportes, combinando color, tipografía, composición y movimiento para construir una experiencia visual coherente durante todo el evento de Franco Pisso.",
+    ],
+    tools: ["After Effects", "Illustrator"],
+    tags: ["Diseño gráfico", "Motion Graphics", "Identidad visual"],
+    hideEyebrow: true, // las categorías ya figuran como etiquetas debajo del título
     image: "/projects/proyecto-diseno-01.jpg",
     video: null,
-    clips: [
-      "/projects/juntada-inconformista-loop-1.mp4",
-      "/projects/juntada-inconformista-loop-2.mp4",
-    ],
-    gallery: [
-      { image: "/projects/tarjetas.webp", caption: "Tarjetas de identificación — branding en Illustrator" },
-      { image: "/projects/foto-grupal.jpg", caption: "Foto grupal del evento" }, // TODO: cambiá el texto si querés otro
-    ],
-    content: [
-      "TODO: contá acá el proceso — de dónde salió el proyecto, qué te pidió el cliente (o qué te propusiste vos) y cómo lo encaraste.",
-      "TODO: podés sumar otro párrafo más contando el resultado final y qué aprendiste o qué destacarías de este trabajo.",
+    // la página se arma con estas secciones, en orden. Cada una puede tener:
+    //   title, paragraphs (lista de textos), video + poster (video vertical),
+    //   images (fotos con caption), clips (loops cortos con caption), o bien
+    //   "parts": bloques con subtitle + paragraphs + list + images + clips.
+    sections: [
+      {
+        title: "El proyecto",
+        paragraphs: [
+          "La idea fue mantener una línea visual reconocible en todos estos puntos de contacto. Para ello, trabajé principalmente con una paleta naranja, tipografías de gran presencia y composiciones pensadas para funcionar tanto en pantalla como en piezas físicas.",
+          "El resultado fue un sistema gráfico que podía adaptarse a diferentes contenidos sin perder su identidad.",
+        ],
+      },
+      {
+        title: "Diseño en movimiento",
+        video: "/projects/juntada-inconformista-vertical.mp4",
+        poster: "/projects/juntada-inconformista-poster.jpg",
+        parts: [
+          {
+            subtitle: "Las pantallas como parte de la experiencia",
+            paragraphs: [
+              "Una parte central del trabajo estuvo en las pantallas del salón. Diseñé y animé diferentes piezas para acompañar los distintos momentos del evento: la pantalla principal con el logo de OPI 2.0, el título de la juntada y la trivia.",
+              "El movimiento no fue pensado como un elemento aislado, sino como una extensión de la identidad visual. Las piezas mantienen los mismos recursos gráficos y tipográficos para que el evento conserve una estética reconocible incluso cuando cambia el contenido.",
+            ],
+          },
+          {
+            subtitle: "Un sistema pensado para actualizarse",
+            paragraphs: [
+              "Las composiciones fueron desarrolladas en After Effects utilizando elementos de texto reutilizables. Esto permitió actualizar la información de las pantallas sin tener que reconstruir las animaciones desde cero.",
+              "Además de facilitar el trabajo durante la producción, este sistema permitió mantener consistencia entre las diferentes piezas.",
+              "Para los más curiosos les dejo una foto de la composición en el programa.",
+            ],
+            images: [
+              {
+                image: "/projects/juntada-after-effects.webp",
+                alt: "Composición de la pantalla principal en After Effects",
+              },
+            ],
+          },
+          {
+            subtitle: "Piezas desarrolladas:",
+            list: [
+              "Loop principal",
+              "Loop de la trivia",
+            ],
+            clips: [
+              { src: "/projects/juntada-inconformista-loop-1.mp4", caption: "Loop principal" },
+              { src: "/projects/juntada-inconformista-loop-2.mp4", caption: "Loop de la trivia" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Identidad del staff",
+        paragraphs: [
+          "La identidad del evento no terminaba en las pantallas.",
+          "También diseñé las credenciales de identificación del staff, buscando llevar los mismos recursos visuales del evento a una pieza física que acompañara al equipo durante la jornada y que, al mismo tiempo, quedara como un lindo recuerdo.",
+          "Cada credencial incluye un avatar ilustrado (diseñado por un alumno de la cursada 2026; te mando un abrazo enorme, San <3), nombre y rol del integrante, utilizando el naranja como elemento común para mantener la conexión con el resto de la identidad.",
+        ],
+        images: [
+          { image: "/projects/tarjetas.webp", caption: "Credenciales del staff — branding en Illustrator" },
+        ],
+      },
+      {
+        title: "El resultado final",
+        paragraphs: [
+          "Un evento increíble, lleno de alegría, personas que nunca me voy a olvidar, regalos y abrazos por parte del alumnado, y un equipo de trabajo impecable: Paw, Andy, Orne, Vi, Rodri, Paolo, Gonza, Lucas y, claramente, Franco.",
+          "Gracias por esta oportunidad y gracias por el espacio :)",
+        ],
+        images: [
+          { image: "/projects/foto-grupal.jpg", caption: "Foto grupal del evento" },
+        ],
+      },
     ],
     link: null,
     photoCredit: "Lucas Scolari",
