@@ -85,6 +85,7 @@ export const projects = [
     ],
     tools: ["After Effects", "Illustrator"],
     tags: ["Diseño gráfico", "Motion Graphics", "Identidad visual"],
+    hideYear: true, // en esta página no se muestra el año junto a las etiquetas
     hideEyebrow: true, // las categorías ya figuran como etiquetas debajo del título
     image: "/projects/proyecto-diseno-01.jpg",
     video: null,
@@ -93,13 +94,6 @@ export const projects = [
     //   images (fotos con caption), clips (loops cortos con caption), o bien
     //   "parts": bloques con subtitle + paragraphs + list + images + clips.
     sections: [
-      {
-        title: "El proyecto",
-        paragraphs: [
-          "La idea fue mantener una línea visual reconocible en todos estos puntos de contacto. Para ello, trabajé principalmente con una paleta naranja, tipografías de gran presencia y composiciones pensadas para funcionar tanto en pantalla como en piezas físicas.",
-          "El resultado fue un sistema gráfico que podía adaptarse a diferentes contenidos sin perder su identidad.",
-        ],
-      },
       {
         title: "Diseño en movimiento",
         video: "/projects/juntada-inconformista-vertical.mp4",

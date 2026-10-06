@@ -32,7 +32,7 @@ const categoryLabel =
     <h1 class="project-detail__title">{project.title}</h1>
 
     <div class="project-detail__meta">
-      <span class="project-detail__year">{project.year}</span>
+      {!project.hideYear && <span class="project-detail__year">{project.year}</span>}
       {project.tags.map((tag: string) => (
         <span class="project-detail__tag">{tag}</span>
       ))}

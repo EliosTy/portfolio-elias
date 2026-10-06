@@ -1,7 +1,9 @@
 ---
-// TODO: reemplazá por tu email real. El formulario abre el mail del
-// visitante con estos datos ya cargados (no hay backend: es 100% estático).
-const CONTACT_EMAIL = "tu@email.com";
+// El formulario envía los mensajes con Web3Forms (api.web3forms.com): ellos
+// reciben los datos y te los reenvían al mail con el que creaste la cuenta.
+// La "access key" es pública por diseño (va en el código del sitio, no da
+// acceso a tu cuenta): sólo sirve para que los mensajes lleguen a tu casilla.
+const WEB3FORMS_ACCESS_KEY = "04dcf360-16bf-4a92-9016-cee4e4e50108";
 ---
 
 <section class="contact section" id="contacto">
@@ -9,20 +11,25 @@ const CONTACT_EMAIL = "tu@email.com";
   <div class="container contact__inner">
     <p class="eyebrow contact__eyebrow">Contacto</p>
 
-    <form class="contact__form" id="contact-form" data-email={CONTACT_EMAIL}>
+    <form class="contact__form" id="contact-form" data-access-key={WEB3FORMS_ACCESS_KEY}>
       <div class="field">
         <label for="mail">Tu mail</label>
-        <input type="email" id="mail" name="mail" required placeholder="vos@ejemplo.com" />
+        <input type="email" id="mail" name="email" required placeholder="vos@ejemplo.com" />
       </div>
       <div class="field">
         <label for="asunto">Asunto</label>
-        <input type="text" id="asunto" name="asunto" required placeholder="Sobre qué querés hablar" />
+        <input type="text" id="asunto" name="subject" required placeholder="Sobre qué querés hablar" />
       </div>
       <div class="field">
         <label for="mensaje">Mensaje</label>
-        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contame un poco sobre tu proyecto"></textarea>
+        <textarea id="mensaje" name="message" rows="4" placeholder="Contame un poco sobre tu proyecto"></textarea>
       </div>
+      <!-- nombre que ves como remitente en el mail que te llega -->
+      <input type="hidden" name="from_name" value="Portfolio TySpace" />
+      <!-- trampa anti-spam: las personas no lo ven ni lo tildan, los bots sí -->
+      <input type="checkbox" name="botcheck" class="contact__botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <button type="submit" class="btn btn-primary">Enviar</button>
+      <p class="contact__status" id="contact-status" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
@@ -138,21 +145,75 @@ const CONTACT_EMAIL = "tu@email.com";
     color: #fff;
     opacity: 0.85;
   }
+
+  .contact__form .btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .contact__botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .contact__status {
+    min-height: 1.4em;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .contact__status--error {
+    color: #ffd2b8;
+  }
 </style>
 
 <script>
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const statusEl = document.getElementById("contact-status");
 
-  form?.addEventListener("submit", (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = form.dataset.email || "";
-    const mail = (form.querySelector("#mail") as HTMLInputElement)?.value || "";
-    const asunto = (form.querySelector("#asunto") as HTMLInputElement)?.value || "";
-    const mensaje = (form.querySelector("#mensaje") as HTMLTextAreaElement)?.value || "";
 
-    const subject = encodeURIComponent(asunto);
-    const body = encodeURIComponent(`${mensaje}\n\n— Mi mail: ${mail}`);
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = button.textContent;
+    const setStatus = (text: string, isError = false) => {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.classList.toggle("contact__status--error", isError);
+    };
 
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.access_key = form.dataset.accessKey || "";
+
+    button.disabled = true;
+    button.textContent = "Enviando...";
+    setStatus("");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStatus("¡Listo! Tu mensaje fue enviado, te respondo pronto.");
+        form.reset();
+      } else {
+        setStatus("No se pudo enviar el mensaje. Probá de nuevo en un rato.", true);
+      }
+    } catch (error) {
+      setStatus("No se pudo enviar el mensaje. Revisá tu conexión y probá de nuevo.", true);
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
   });
 </script>
