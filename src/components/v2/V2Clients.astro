@@ -1,0 +1,243 @@
+---
+import { clients } from "../../data/clients.js";
+---
+
+<section class="vc" id="clientes">
+  <span class="vc__grid" aria-hidden="true"></span>
+  <span class="vc__grain" aria-hidden="true"></span>
+
+  <div class="v2-container vc__head">
+    <p class="vc__label" data-reveal>Marcas y clientes con los que trabajé</p>
+  </div>
+
+  <div class="vc__marquee" data-reveal>
+    <!-- una sola lista con los logos duplicados: así los vecinos de cada
+         logo (incluso en el empalme del loop) reaccionan al hover -->
+    <ul class="vc__track">
+      {[0, 1].map((copy) =>
+        clients.map((client) => (
+          <li class="vc__item" aria-hidden={copy === 1 ? "true" : undefined}>
+            {client.image ? (
+              <img src={client.image} alt={copy === 1 ? "" : client.name || "Cliente"} loading="lazy" />
+            ) : (
+              <span>{client.name}</span>
+            )}
+          </li>
+        ))
+      )}
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* fondo "autoridad": negro violáceo profundo, un foco de luz arriba, una
+     grilla fina que se desvanece hacia los bordes, grano sutil y filetes
+     de luz violeta→lima arriba y abajo. */
+  .vc {
+    position: relative;
+    isolation: isolate;
+    padding: 76px 0 84px;
+    overflow: hidden;
+    background:
+      radial-gradient(55% 90% at 50% 0%, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 72%),
+      radial-gradient(40% 70% at 50% 120%, color-mix(in srgb, var(--accent) 16%, transparent) 0%, transparent 70%),
+      linear-gradient(180deg, #06030d 0%, #0c0720 52%, #06030d 100%);
+  }
+
+  .vc::before,
+  .vc::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent-2) 50%, var(--accent) 70%, transparent 100%);
+  }
+
+  .vc::before {
+    top: 0;
+    opacity: 0.7;
+  }
+
+  .vc::after {
+    bottom: 0;
+    opacity: 0.28;
+  }
+
+  .vc__grid {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center top;
+    -webkit-mask-image: radial-gradient(ellipse 70% 100% at 50% 50%, #000 15%, transparent 78%);
+    mask-image: radial-gradient(ellipse 70% 100% at 50% 50%, #000 15%, transparent 78%);
+  }
+
+  .vc__grain {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  .vc__label {
+    margin: 0 0 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--text) 78%, var(--accent));
+  }
+
+  /* el padding vertical deja lugar para que el logo, al agrandarse y
+     subir con el mouse, no quede cortado por el overflow del carril */
+  .vc__marquee {
+    overflow: hidden;
+    padding: 34px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  }
+
+  /* un solo carril: gap y padding derecho iguales → el loop de -50% es exacto */
+  .vc__track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    margin: 0;
+    padding: 0 20px 0 0;
+    list-style: none;
+    animation: vcScroll 38s linear infinite;
+  }
+
+  .vc__marquee:hover .vc__track {
+    animation-play-state: paused;
+  }
+
+  .vc__item {
+    position: relative;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    min-width: 168px;
+    padding: 0 28px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 30px -18px rgba(0, 0, 0, 0.9);
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      translate 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 0.3s ease,
+      box-shadow 0.4s ease,
+      background 0.3s ease;
+  }
+
+  /* hover: el logo sube y crece un 20%; los dos vecinos se corren un 10%
+     de su ancho hacia afuera para hacerle lugar */
+  .vc__item:hover {
+    z-index: 3;
+    transform: translateY(-4px) scale(1.2);
+    border-color: var(--accent-2);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 12px 26px -12px color-mix(in srgb, var(--accent) 75%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--accent-2) 35%, transparent);
+  }
+
+  .vc__item:hover + .vc__item {
+    translate: 10% 0;
+  }
+
+  .vc__item:has(+ .vc__item:hover) {
+    translate: -10% 0;
+  }
+
+  .vc__item img {
+    display: block;
+    max-height: 44px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.78;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+
+  .vc__item:hover img {
+    filter: brightness(0) invert(1);
+    opacity: 1;
+  }
+
+  .vc__item span {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  @keyframes vcScroll {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .vc {
+      padding: 56px 0 64px;
+    }
+
+    .vc__marquee {
+      padding: 30px 0;
+    }
+
+    .vc__label {
+      padding: 0 8px;
+      letter-spacing: 0.18em;
+      line-height: 1.6;
+    }
+
+    .vc__item {
+      height: 72px;
+      min-width: 136px;
+      padding: 0 20px;
+    }
+
+    .vc__item img {
+      max-height: 36px;
+      max-width: 100px;
+    }
+
+    .vc__track {
+      animation-duration: 28s;
+    }
+
+    .vc__grid {
+      background-size: 40px 40px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vc__track {
+      animation: none;
+    }
+
+    .vc__marquee {
+      overflow-x: auto;
+    }
+  }
+</style>

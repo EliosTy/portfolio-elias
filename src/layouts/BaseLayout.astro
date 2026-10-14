@@ -5,11 +5,13 @@ import WhatsAppButton from "../components/WhatsAppButton.astro";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "TySpace — Elias, Diseño Gráfico & Motion Graphics",
   description = "TySpace: el espacio de Elias para diseño gráfico, motion graphics y proyectos personales.",
+  noindex = false,
 } = Astro.props;
 ---
 
@@ -29,6 +31,7 @@ const {
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0b0616" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

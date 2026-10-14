@@ -1,0 +1,326 @@
+---
+import { projects } from "../../data/projects.js";
+
+// mismos proyectos destacados que la versión actual
+const featured = projects.filter((p) => p.featured).slice(0, 4);
+const items = featured.length >= 4 ? featured : projects.slice(0, 4);
+---
+
+<section class="vw" id="trabajo">
+  <div class="v2-container">
+    <div class="vw__head">
+      <div data-reveal>
+        <p class="v2-eyebrow">Portfolio</p>
+        <h2 class="v2-title">Proyectos <em>destacados</em></h2>
+      </div>
+      <div class="vw__arrows" data-reveal style="--d:2">
+        <button type="button" class="vw__arrow" data-rail-prev aria-label="Anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <button type="button" class="vw__arrow" data-rail-next aria-label="Siguiente">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="vw__rail" data-rail>
+    <ul class="vw__list">
+      {items.map((p, i) => (
+        <li class="vw__item" data-reveal style={`--d:${i}`}>
+          <a href={`/trabajos/${p.slug}`} class="vw__card" data-tilt data-spot draggable="false">
+            <div class="vw__img">
+              <img src={p.image} alt={p.title} loading="lazy" draggable="false" />
+            </div>
+            <span class="vw__shine" aria-hidden="true"></span>
+            <div class="vw__info">
+              <div class="vw__tags">
+                {p.tags.slice(0, 2).map((t: string) => <span>{t}</span>)}
+              </div>
+              <h3 class="vw__name">{p.title}</h3>
+              <span class="vw__go" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="v2-container">
+    <div class="vw__foot" data-reveal>
+      <div class="vw__bar" aria-hidden="true"><i></i></div>
+      <a href="/trabajos" class="v2-btn">Ver todos los trabajos</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vw {
+    padding: 110px 0 96px;
+    background:
+      radial-gradient(60% 40% at 15% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+      var(--bg);
+  }
+
+  .vw__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 44px;
+  }
+
+  .vw__arrows {
+    display: flex;
+    gap: 10px;
+  }
+
+  .vw__arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+
+  .vw__arrow:hover {
+    border-color: var(--accent-2);
+    color: var(--accent-2);
+    transform: scale(1.06);
+  }
+
+  .vw__arrow:focus-visible {
+    outline: 3px solid var(--accent-2);
+    outline-offset: 3px;
+  }
+
+  /* carril horizontal: se desliza con el dedo, con la rueda o arrastrando */
+  .vw__rail {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 20px 0 36px;
+    cursor: grab;
+  }
+
+  .vw__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vw__rail.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+  }
+
+  .vw__rail.is-dragging * {
+    pointer-events: none;
+  }
+
+  .vw__list {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    margin: 0;
+    padding: 0 max(24px, calc((100vw - 1240px) / 2 + 24px));
+    list-style: none;
+  }
+
+  .vw__item {
+    flex: none;
+    width: 340px;
+    scroll-snap-align: start;
+    scroll-margin-left: max(24px, calc((100vw - 1240px) / 2 + 24px));
+  }
+
+  .vw__card {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 5;
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    text-decoration: none;
+    color: var(--text);
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: border-color 0.3s ease, box-shadow 0.4s ease;
+  }
+
+  .vw__card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--accent) 80%, transparent);
+  }
+
+  .vw__card:focus-visible {
+    outline: 3px solid var(--accent-2);
+    outline-offset: 4px;
+  }
+
+  .vw__img {
+    position: absolute;
+    inset: 0;
+  }
+
+  .vw__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .vw__card:hover .vw__img img {
+    transform: scale(1.07);
+  }
+
+  /* degradé para que se lea el texto + brillo que sigue al puntero */
+  .vw__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 38%, color-mix(in srgb, var(--bg) 92%, transparent) 100%);
+  }
+
+  .vw__shine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 60%);
+    pointer-events: none;
+  }
+
+  .vw__card:hover .vw__shine {
+    opacity: 1;
+  }
+
+  .vw__info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    padding: 22px 22px 24px;
+  }
+
+  .vw__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .vw__tags span {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent-2) 60%, transparent);
+    background: color-mix(in srgb, var(--bg) 60%, transparent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent-2);
+  }
+
+  .vw__name {
+    margin: 0;
+    padding-right: 48px;
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .vw__go {
+    position: absolute;
+    right: 20px;
+    bottom: 22px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cta-accent);
+    color: #fff;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.3s ease;
+  }
+
+  .vw__card:hover .vw__go {
+    transform: translate3d(4px, -4px, 0) rotate(-45deg);
+  }
+
+  .vw__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .vw__bar {
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  .vw__bar i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform-origin: 0 50%;
+    transform: scaleX(var(--rail, 0.25));
+  }
+
+  @media (max-width: 720px) {
+    .vw {
+      padding: 72px 0 72px;
+    }
+
+    .vw__head {
+      margin-bottom: 28px;
+    }
+
+    .vw__arrows {
+      display: none;
+    }
+
+    .vw__item {
+      width: min(78vw, 320px);
+    }
+
+    .vw__list {
+      gap: 16px;
+      padding: 0 24px;
+    }
+
+    .vw__item {
+      scroll-margin-left: 24px;
+    }
+
+    .vw__foot {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 24px;
+    }
+
+    .vw__foot .v2-btn {
+      width: 100%;
+    }
+  }
+</style>

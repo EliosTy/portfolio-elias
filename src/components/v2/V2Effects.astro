@@ -1,0 +1,316 @@
+---
+// Script único de la versión 2: animaciones de entrada, header, contadores,
+// inclinación y luz en las tarjetas, parallax, carril de proyectos, videos
+// que se cargan solos y luz que sigue al mouse. Todo se apaga si el sistema
+// tiene activado "reducir movimiento".
+---
+
+<script>
+  const root = document.documentElement;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const $$ = <T extends Element = HTMLElement>(sel: string, ctx: ParentNode = document) =>
+    Array.from(ctx.querySelectorAll<T>(sel));
+
+  /* ---------- 1. entrada de elementos ---------- */
+  const reveals = $$("[data-reveal]");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const el = en.target as HTMLElement;
+          el.classList.add("is-in");
+          io.unobserve(el);
+          // al terminar, se libera el atributo para que no pise los hover
+          const delay = Number(getComputedStyle(el).getPropertyValue("--d") || 0) * 90;
+          window.setTimeout(() => el.removeAttribute("data-reveal"), delay + 1100);
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -6% 0px" }
+    );
+    reveals.forEach((el) => io.observe(el));
+  } else {
+    reveals.forEach((el) => el.classList.add("is-in"));
+  }
+
+  /* ---------- 2. header + progreso + parallax (un solo handler de scroll) ---------- */
+  const header = document.getElementById("v2-header");
+  const parallax = $$("[data-parallax]").map((el) => ({
+    el,
+    speed: Number(el.dataset.parallax) || 0,
+    visible: false,
+  }));
+
+  if ("IntersectionObserver" in window && !reduce) {
+    const pio = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const item = parallax.find((p) => p.el === en.target);
+        if (item) item.visible = en.isIntersecting;
+      });
+    });
+    parallax.forEach((p) => pio.observe(p.el));
+  }
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const y = window.scrollY;
+      const max = Math.max(1, root.scrollHeight - window.innerHeight);
+      root.style.setProperty("--v2-progress", String(Math.min(1, y / max)));
+      header?.classList.toggle("is-scrolled", y > 30);
+
+      if (!reduce) {
+        const vh = window.innerHeight;
+        parallax.forEach((p) => {
+          if (!p.visible) return;
+          const r = p.el.getBoundingClientRect();
+          const off = Math.max(-26, Math.min(26, (r.top + r.height / 2 - vh / 2) * p.speed));
+          p.el.style.setProperty("--par", off.toFixed(1) + "px");
+        });
+      }
+    });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- 3. menú móvil ---------- */
+  const burger = header?.querySelector<HTMLButtonElement>(".vhd__burger");
+  const menu = document.getElementById("v2-menu");
+  const setMenu = (open: boolean) => {
+    header?.classList.toggle("is-open", open);
+    root.classList.toggle("v2-lock", open);
+    burger?.setAttribute("aria-expanded", String(open));
+    burger?.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    menu?.setAttribute("aria-hidden", String(!open));
+  };
+  burger?.addEventListener("click", () => setMenu(!header?.classList.contains("is-open")));
+  menu?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).closest("a")) setMenu(false);
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
+  });
+  window.matchMedia("(min-width: 861px)").addEventListener("change", (m) => {
+    if (m.matches) setMenu(false);
+  });
+
+  /* ---------- 4. contadores ---------- */
+  const counters = $$("[data-count]");
+  const runCount = (el: HTMLElement) => {
+    const target = Number(el.dataset.count) || 0;
+    const prefix = el.dataset.prefix || "";
+    if (reduce) {
+      el.textContent = prefix + target;
+      return;
+    }
+    const t0 = performance.now();
+    const dur = 1700;
+    const step = (now: number) => {
+      const k = Math.min(1, (now - t0) / dur);
+      const eased = 1 - Math.pow(1 - k, 3);
+      el.textContent = prefix + Math.round(target * eased);
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if ("IntersectionObserver" in window) {
+    counters.forEach((el) => {
+      if (!reduce) el.textContent = (el.dataset.prefix || "") + "0";
+    });
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          cio.unobserve(en.target);
+          runCount(en.target as HTMLElement);
+        });
+      },
+      { threshold: 0.6 }
+    );
+    counters.forEach((el) => cio.observe(el));
+  }
+
+  /* ---------- 5. inclinación + luz en tarjetas (solo mouse) ---------- */
+  if (fine && !reduce) {
+    $$("[data-tilt], [data-spot]").forEach((el) => {
+      const tilt = el.hasAttribute("data-tilt");
+      let raf = 0;
+      let px = 0;
+      let py = 0;
+      const apply = () => {
+        raf = 0;
+        const r = el.getBoundingClientRect();
+        const x = (px - r.left) / r.width;
+        const y = (py - r.top) / r.height;
+        el.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        el.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+        if (tilt) {
+          el.style.setProperty("--ry", ((x - 0.5) * 9).toFixed(2) + "deg");
+          el.style.setProperty("--rx", ((0.5 - y) * 7).toFixed(2) + "deg");
+        }
+      };
+      el.addEventListener("pointermove", (e) => {
+        if ((e as PointerEvent).pointerType !== "mouse") return;
+        px = (e as PointerEvent).clientX;
+        py = (e as PointerEvent).clientY;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+      el.addEventListener("pointerleave", () => {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        el.style.setProperty("--rx", "0deg");
+        el.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* ---------- 6. videos: se cargan y reproducen solo cuando se ven ---------- */
+  const videos = $$<HTMLVideoElement>("video[data-src]");
+  if ("IntersectionObserver" in window) {
+    const vio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          const v = en.target as HTMLVideoElement;
+          if (en.isIntersecting) {
+            if (!v.getAttribute("src")) {
+              v.src = v.dataset.src || "";
+              v.load();
+            }
+            if (!reduce) v.play().catch(() => {});
+          } else if (!v.paused) {
+            v.pause();
+          }
+        });
+      },
+      { rootMargin: "200px 0px", threshold: 0.15 }
+    );
+    videos.forEach((v) => vio.observe(v));
+  } else {
+    videos.forEach((v) => {
+      v.src = v.dataset.src || "";
+    });
+  }
+
+  /* ---------- 7. carril de proyectos ---------- */
+  const rail = document.querySelector<HTMLElement>("[data-rail]");
+  if (rail) {
+    const setProgress = () => {
+      const max = rail.scrollWidth;
+      const k = max ? (rail.scrollLeft + rail.clientWidth) / max : 1;
+      rail.parentElement?.style.setProperty("--rail", Math.min(1, Math.max(0.05, k)).toFixed(3));
+    };
+    rail.addEventListener("scroll", setProgress, { passive: true });
+    window.addEventListener("resize", setProgress, { passive: true });
+    setProgress();
+
+    const stepSize = () => {
+      const item = rail.querySelector<HTMLElement>("li");
+      return (item?.getBoundingClientRect().width || 340) + 24;
+    };
+    document.querySelector("[data-rail-prev]")?.addEventListener("click", () => {
+      rail.scrollBy({ left: -stepSize(), behavior: reduce ? "auto" : "smooth" });
+    });
+    document.querySelector("[data-rail-next]")?.addEventListener("click", () => {
+      rail.scrollBy({ left: stepSize(), behavior: reduce ? "auto" : "smooth" });
+    });
+
+    // arrastrar con el mouse (en el celular se desliza con el dedo)
+    let down = false;
+    let startX = 0;
+    let startLeft = 0;
+    let moved = 0;
+    rail.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true;
+      moved = 0;
+      startX = e.clientX;
+      startLeft = rail.scrollLeft;
+    });
+    window.addEventListener("pointermove", (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      if (moved > 5) {
+        rail.classList.add("is-dragging");
+        rail.scrollLeft = startLeft - dx;
+      }
+    });
+    const end = () => {
+      if (!down) return;
+      down = false;
+      window.setTimeout(() => rail.classList.remove("is-dragging"), 0);
+    };
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+    rail.addEventListener(
+      "click",
+      (e) => {
+        if (moved > 5) {
+          e.preventDefault();
+          e.stopPropagation();
+          moved = 0;
+        }
+      },
+      true
+    );
+  }
+
+  /* ---------- 8. "Sobre mí": los párrafos se van encendiendo ---------- */
+  const lits = $$("[data-lit]");
+  if ("IntersectionObserver" in window) {
+    const lio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          en.target.classList.add("is-lit");
+          lio.unobserve(en.target);
+        });
+      },
+      { rootMargin: "0px 0px -28% 0px" }
+    );
+    lits.forEach((el) => lio.observe(el));
+  } else {
+    lits.forEach((el) => el.classList.add("is-lit"));
+  }
+
+  /* ---------- 9. luz que sigue al mouse (solo PC) ---------- */
+  if (fine && !reduce) {
+    const glow = document.createElement("div");
+    glow.className = "v2-glow";
+    glow.setAttribute("aria-hidden", "true");
+    document.body.appendChild(glow);
+    let gx = window.innerWidth / 2;
+    let gy = window.innerHeight / 2;
+    let tx = gx;
+    let ty = gy;
+    let running = false;
+    const loop = () => {
+      gx += (tx - gx) * 0.12;
+      gy += (ty - gy) * 0.12;
+      glow.style.transform = `translate3d(${gx.toFixed(1)}px, ${gy.toFixed(1)}px, 0)`;
+      if (Math.abs(tx - gx) > 0.5 || Math.abs(ty - gy) > 0.5) requestAnimationFrame(loop);
+      else running = false;
+    };
+    window.addEventListener(
+      "pointermove",
+      (e) => {
+        if (e.pointerType !== "mouse") return;
+        tx = e.clientX;
+        ty = e.clientY;
+        glow.classList.add("is-on");
+        if (!running) {
+          running = true;
+          requestAnimationFrame(loop);
+        }
+      },
+      { passive: true }
+    );
+    document.addEventListener("pointerleave", () => glow.classList.remove("is-on"));
+  }
+</script>

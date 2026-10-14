@@ -1,0 +1,141 @@
+---
+const courseUrl =
+  "https://hotmart.com/product/impulsa-tu-negocio-con-la-inteligencia-artificial-guia-para-emprendedores/S107775825Y";
+---
+
+<section class="vcu" id="curso">
+  <div class="vcu__bg" aria-hidden="true"></div>
+  <div class="v2-container vcu__grid">
+    <div class="vcu__media" data-reveal="left">
+      <div class="vcu__halo" aria-hidden="true"></div>
+      <div class="vcu__img" data-tilt data-parallax="-0.05">
+        <img
+          src="/curso/curso-ia.jpg"
+          alt="Curso Impulsa Tu Negocio con la Inteligencia Artificial: guía para emprendedores"
+          width="1200"
+          height="1200"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div class="vcu__body" data-reveal="right" style="--d:1">
+      <p class="v2-eyebrow">Curso</p>
+      <h2 class="v2-title vcu__title">Potenciá tu marca con la Inteligencia Artificial: Curso para Emprendedores</h2>
+
+      <p>No pierdas ventas por hacer que tu marca se vea igual a todas.</p>
+      <p>
+        Aprendé a usar Inteligencia Artificial para generar imágenes desde cero,
+        sin conocimientos previos. Un curso pensado para emprendedores y
+        pequeños negocios que quieren crear contenido con más personalidad y
+        potenciar sus ventas.
+      </p>
+      <p>
+        🎁 De regalo, tendrás material opcional sobre teoría básica de diseño
+        gráfico para potenciar tu creatividad.
+      </p>
+      <p>Es momento de diferenciarte, destacar y vender más.</p>
+
+      <a href={courseUrl} class="v2-btn v2-btn--cta" target="_blank" rel="noopener">Ver el curso</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vcu {
+    position: relative;
+    padding: 110px 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--accent) 10%, var(--bg)) 100%);
+  }
+
+  .vcu__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 72px;
+    align-items: center;
+  }
+
+  .vcu__media {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .vcu__halo {
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+    filter: blur(70px);
+    opacity: 0.35;
+    animation: vcuSpin 18s linear infinite;
+  }
+
+  .vcu__img {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--accent) 60%, var(--border));
+    box-shadow: 0 40px 90px -30px color-mix(in srgb, var(--accent) 70%, transparent);
+    transform: translate3d(0, var(--par, 0px), 0) perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  }
+
+  .vcu__img img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .vcu__title {
+    margin-bottom: 26px;
+    font-size: clamp(24px, 3.6vw, 40px);
+    line-height: 1.12;
+  }
+
+  .vcu__body p:not(.v2-eyebrow) {
+    margin: 0 0 16px;
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .vcu__body .v2-btn {
+    margin-top: 14px;
+  }
+
+  @keyframes vcuSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .vcu {
+      padding: 72px 0;
+    }
+
+    .vcu__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+    }
+
+    .vcu__img {
+      max-width: 360px;
+    }
+
+    .vcu__body .v2-btn {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vcu__halo {
+      animation: none;
+    }
+  }
+</style>

@@ -22,7 +22,7 @@ const categoryLabel =
   categories.find((c) => c.id === project.category)?.label || project.category;
 ---
 
-<BaseLayout title={`${project.title} — TySpace`} description={project.description}>
+<BaseLayout title={`${project.title} — TySpace`} description={project.description || undefined}>
   <Header />
 
   <div class="project-detail container">
@@ -31,14 +31,16 @@ const categoryLabel =
     {!project.hideEyebrow && <p class="eyebrow">{categoryLabel}</p>}
     <h1 class="project-detail__title">{project.title}</h1>
 
-    <div class="project-detail__meta">
-      {!project.hideYear && <span class="project-detail__year">{project.year}</span>}
-      {project.tags.map((tag: string) => (
-        <span class="project-detail__tag">{tag}</span>
-      ))}
-    </div>
+    {!project.hideMeta && (
+      <div class="project-detail__meta">
+        {!project.hideYear && <span class="project-detail__year">{project.year}</span>}
+        {project.tags.map((tag: string) => (
+          <span class="project-detail__tag">{tag}</span>
+        ))}
+      </div>
+    )}
 
-    <p class="project-detail__description">{project.description}</p>
+    {project.description && <p class="project-detail__description">{project.description}</p>}
     {project.intro && project.intro.map((paragraph: string) => (
       <p class="project-detail__description project-detail__description--extra">{paragraph}</p>
     ))}
@@ -50,7 +52,7 @@ const categoryLabel =
       </p>
     )}
 
-    <div class="project-detail__media">
+    <div class:list={["project-detail__media", { "project-detail__media--bare": project.coverFit === "square" }]}>
       {project.video ? (
         <div class="project-detail__video">
           <iframe
@@ -62,7 +64,12 @@ const categoryLabel =
           ></iframe>
         </div>
       ) : (
-        <img src={project.image} alt={project.title} class="project-detail__image" />
+        <img
+          src={project.image}
+          alt={project.title}
+          class:list={["project-detail__image", { "project-detail__image--contain": project.coverFit === "contain", "project-detail__image--square": project.coverFit === "square" }]}
+          style={project.coverBg ? `background:${project.coverBg}` : undefined}
+        />
       )}
     </div>
 
@@ -280,6 +287,27 @@ const categoryLabel =
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  /* portadas cuadradas (logos): se ven completas, sin recortar */
+  .project-detail__image--contain {
+    object-fit: contain;
+  }
+
+  /* portadas cuadradas con escena completa (mockups): se muestran enteras,
+     centradas y sin marco, en vez de dentro de una caja panorámica */
+  .project-detail__media--bare {
+    border: none;
+    background: none;
+    overflow: visible;
+  }
+
+  .project-detail__image--square {
+    aspect-ratio: 1 / 1;
+    max-width: 760px;
+    margin: 20px auto 0;
+    border-radius: 20px;
     object-fit: cover;
   }
 

@@ -1,32 +1,46 @@
 ---
+// PÁGINA PRINCIPAL (antes "versión 2"). Usa los datos de src/data (proyectos,
+// clientes, servicios, blog) y los componentes de src/components/v2. La
+// versión anterior del sitio quedó en /v1 hasta que se decida borrarla.
+import "../styles/v2.css";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import Clients from "../components/Clients.astro";
-import FeaturedWork from "../components/FeaturedWork.astro";
-import ServicesIntro from "../components/ServicesIntro.astro";
-import MotionIntro from "../components/MotionIntro.astro";
-import About from "../components/About.astro";
-import Experience from "../components/Experience.astro";
-import Services from "../components/Services.astro";
-import Course from "../components/Course.astro";
-import Blog from "../components/Blog.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
+import V2Header from "../components/v2/V2Header.astro";
+import V2Hero from "../components/v2/V2Hero.astro";
+import V2Clients from "../components/v2/V2Clients.astro";
+import V2Work from "../components/v2/V2Work.astro";
+import V2Showcase from "../components/v2/V2Showcase.astro";
+import V2Stats from "../components/v2/V2Stats.astro";
+import V2Services from "../components/v2/V2Services.astro";
+import V2Course from "../components/v2/V2Course.astro";
+import V2About from "../components/v2/V2About.astro";
+import V2Blog from "../components/v2/V2Blog.astro";
+import V2Contact from "../components/v2/V2Contact.astro";
+import V2Footer from "../components/v2/V2Footer.astro";
+import V2Effects from "../components/v2/V2Effects.astro";
 ---
 
 <BaseLayout>
-  <Header />
-  <Hero />
-  <Clients />
-  <FeaturedWork />
-  <ServicesIntro />
-  <MotionIntro />
-  <About />
-  <Experience />
-  <Services />
-  <Course />
-  <Blog />
-  <Contact />
-  <Footer />
+  <!-- se marca antes de pintar el resto para que las animaciones de entrada
+       no parpadeen; si el JavaScript no corre, todo queda visible -->
+  <script is:inline>
+    document.documentElement.classList.add("v2-js");
+  </script>
+
+  <div class="v2">
+    <V2Header />
+    <main>
+      <V2Hero />
+      <V2Clients />
+      <V2Work />
+      <V2Showcase />
+      <V2Stats />
+      <V2Services />
+      <V2Course />
+      <V2About />
+      <V2Blog />
+      <V2Contact />
+    </main>
+    <V2Footer />
+  </div>
+  <V2Effects />
 </BaseLayout>

@@ -1,0 +1,259 @@
+---
+// Mismo formulario y mismos campos que la versión actual (Web3Forms), con
+// otro look: tarjeta de cristal sobre un fondo de nebulosa lima/violeta.
+const WEB3FORMS_ACCESS_KEY = "04dcf360-16bf-4a92-9016-cee4e4e50108";
+---
+
+<section class="vct" id="contacto">
+  <div class="v2-nebula" aria-hidden="true">
+    <i class="vct__blob vct__blob--a"></i>
+    <i class="vct__blob vct__blob--b"></i>
+  </div>
+
+  <div class="v2-container vct__inner">
+    <div class="vct__head" data-reveal>
+      <h2 class="v2-title vct__title">Contacto</h2>
+    </div>
+
+    <form class="vct__form" id="v2-contact-form" data-access-key={WEB3FORMS_ACCESS_KEY} data-reveal="zoom" style="--d:1">
+      <div class="vct__field">
+        <input type="email" id="v2-mail" name="email" required placeholder=" " autocomplete="email" />
+        <label for="v2-mail">Tu mail</label>
+        <span class="vct__hint">vos@ejemplo.com</span>
+      </div>
+      <div class="vct__field">
+        <input type="text" id="v2-asunto" name="subject" required placeholder=" " />
+        <label for="v2-asunto">Asunto</label>
+        <span class="vct__hint">Sobre qué querés hablar</span>
+      </div>
+      <div class="vct__field">
+        <textarea id="v2-mensaje" name="message" rows="4" placeholder=" "></textarea>
+        <label for="v2-mensaje">Mensaje</label>
+        <span class="vct__hint">Contame un poco sobre tu proyecto</span>
+      </div>
+      <input type="hidden" name="from_name" value="Portfolio TySpace" />
+      <input type="checkbox" name="botcheck" class="vct__bot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <button type="submit" class="v2-btn v2-btn--cta vct__send">Enviar</button>
+      <p class="vct__status" id="v2-contact-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .vct {
+    position: relative;
+    padding: 110px 0 120px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--accent-2) 10%, #000) 100%);
+  }
+
+  .vct__blob--a {
+    width: 50vw;
+    height: 50vw;
+    left: -10vw;
+    bottom: -20vw;
+    background: color-mix(in srgb, var(--accent-2) 45%, transparent);
+    opacity: 0.35;
+  }
+
+  .vct__blob--b {
+    width: 40vw;
+    height: 40vw;
+    right: -8vw;
+    top: -12vw;
+    background: color-mix(in srgb, var(--accent) 55%, transparent);
+    opacity: 0.4;
+  }
+
+  .vct__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vct__head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .vct__title {
+    font-size: clamp(36px, 8vw, 72px);
+  }
+
+  .vct__form {
+    position: relative;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 36px 32px 32px;
+    border-radius: 28px;
+    border: 1px solid color-mix(in srgb, var(--accent-2) 35%, var(--border));
+    background: color-mix(in srgb, var(--bg) 62%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    box-shadow: 0 40px 100px -40px color-mix(in srgb, var(--accent-2) 40%, transparent);
+  }
+
+  /* campo con etiqueta flotante */
+  .vct__field {
+    position: relative;
+  }
+
+  .vct__field input,
+  .vct__field textarea {
+    width: 100%;
+    padding: 24px 16px 10px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #ececec;
+    color: #1a1a1a;
+    font-family: var(--font-body);
+    font-size: 15px;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .vct__field textarea {
+    min-height: 130px;
+  }
+
+  .vct__field label {
+    position: absolute;
+    left: 16px;
+    top: 17px;
+    font-size: 15px;
+    color: color-mix(in srgb, #1a1a1a 60%, transparent);
+    pointer-events: none;
+    transform-origin: 0 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .vct__field input:focus + label,
+  .vct__field textarea:focus + label,
+  .vct__field input:not(:placeholder-shown) + label,
+  .vct__field textarea:not(:placeholder-shown) + label {
+    transform: translateY(-10px) scale(0.78);
+    color: #4a2b8a;
+  }
+
+  /* el texto de ayuda (el placeholder original) aparece al enfocar */
+  .vct__hint {
+    position: absolute;
+    left: 16px;
+    bottom: 11px;
+    font-size: 14px;
+    color: color-mix(in srgb, #1a1a1a 45%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .vct__field input:focus ~ .vct__hint,
+  .vct__field textarea:focus ~ .vct__hint {
+    opacity: 1;
+  }
+
+  .vct__field input:not(:placeholder-shown) ~ .vct__hint,
+  .vct__field textarea:not(:placeholder-shown) ~ .vct__hint {
+    opacity: 0;
+  }
+
+  .vct__field textarea ~ .vct__hint {
+    bottom: auto;
+    top: 36px;
+  }
+
+  .vct__field input:focus,
+  .vct__field textarea:focus {
+    outline: none;
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-2) 30%, transparent);
+  }
+
+  .vct__bot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .vct__send {
+    align-self: center;
+    min-width: 180px;
+  }
+
+  .vct__send:disabled {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
+  .vct__status {
+    margin: -6px 0 0;
+    min-height: 1.4em;
+    text-align: center;
+    font-size: 14px;
+    color: var(--accent-2);
+  }
+
+  .vct__status--error {
+    color: #ff9a7a;
+  }
+
+  @media (max-width: 720px) {
+    .vct {
+      padding: 72px 0 88px;
+    }
+
+    .vct__form {
+      padding: 26px 18px 24px;
+      border-radius: 22px;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById("v2-contact-form") as HTMLFormElement | null;
+  const statusEl = document.getElementById("v2-contact-status");
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalText = button.textContent;
+    const setStatus = (text: string, isError = false) => {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.classList.toggle("vct__status--error", isError);
+    };
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.access_key = form.dataset.accessKey || "";
+
+    button.disabled = true;
+    button.textContent = "Enviando...";
+    setStatus("");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setStatus("¡Listo! Tu mensaje fue enviado, te respondo pronto.");
+        form.reset();
+      } else {
+        setStatus("No se pudo enviar el mensaje. Probá de nuevo en un rato.", true);
+      }
+    } catch (error) {
+      setStatus("No se pudo enviar el mensaje. Revisá tu conexión y probá de nuevo.", true);
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  });
+</script>

@@ -1,0 +1,26 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="vf">
+  <div class="v2-container vf__inner">
+    <span>© {year} TySpace</span>
+  </div>
+</footer>
+
+<style>
+  .vf {
+    border-top: 1px solid var(--border);
+    background: #000;
+  }
+
+  .vf__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+</style>

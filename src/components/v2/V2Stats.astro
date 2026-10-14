@@ -1,0 +1,164 @@
+---
+// mismos números que la versión actual (editarlos acá o en Experience.astro)
+const stats = [
+  { target: 6, prefix: "+", label: "Años de experiencia" },
+  { target: 42, prefix: "+", label: "Proyectos realizados" },
+  { target: 14, prefix: "+", label: "Clientes" },
+];
+---
+
+<section class="vs" id="numeros" aria-label="Experiencia">
+  <div class="v2-container">
+    <div class="vs__grid">
+      {stats.map((s, i) => (
+        <div class="vs__item" data-reveal="zoom" style={`--d:${i}`} data-tilt>
+          <div class="vs__orbit" aria-hidden="true"><i></i></div>
+          <p class="vs__value" data-count={s.target} data-prefix={s.prefix}>{s.prefix}{s.target}</p>
+          <p class="vs__label">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vs {
+    padding: 88px 0;
+    background: var(--bg);
+  }
+
+  .vs__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .vs__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 44px 16px 36px;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg-elevated) 80%, transparent);
+    text-align: center;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: border-color 0.3s ease;
+  }
+
+  .vs__item:hover {
+    border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  }
+
+  /* órbita: un puntito lima girando alrededor del número */
+  .vs__orbit {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    margin-left: -75px;
+    border-radius: 50%;
+    border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+    animation: vsSpin 14s linear infinite;
+    pointer-events: none;
+  }
+
+  .vs__orbit i {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    box-shadow: 0 0 14px var(--accent-2);
+  }
+
+  .vs__value {
+    position: relative;
+    margin: 18px 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(44px, 7vw, 76px);
+    line-height: 1;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    animation: vsWave 3.6s ease-in-out infinite;
+    animation-delay: calc(var(--d, 0) * 0.9s);
+  }
+
+  /* ola de color en bucle: de blanco a naranja pasando por los 3 números */
+  @keyframes vsWave {
+    0%,
+    45%,
+    100% {
+      color: #fff;
+      text-shadow: 0 0 0 transparent;
+    }
+    20% {
+      color: var(--cta-accent);
+      text-shadow: 0 0 28px color-mix(in srgb, var(--cta-accent) 55%, transparent);
+    }
+  }
+
+  .vs__label {
+    position: relative;
+    margin: 14px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @keyframes vsSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .vs {
+      padding: 64px 0;
+    }
+
+    .vs__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .vs__item {
+      flex-direction: row;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 22px 24px;
+      text-align: left;
+    }
+
+    .vs__orbit {
+      display: none;
+    }
+
+    .vs__value {
+      margin: 0;
+      min-width: 2.4em;
+      font-size: 48px;
+    }
+
+    .vs__label {
+      margin: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vs__orbit,
+    .vs__value {
+      animation: none;
+    }
+  }
+</style>

@@ -160,6 +160,69 @@ export const projects = [
     featured: true,
   },
   {
+    slug: "nicotech",
+    title: "Nicotech",
+    category: "diseño",
+    year: 2026,
+    // por ahora la página del proyecto muestra solo el título y la portada;
+    // cuando haya textos, se suman acá (description, intro, sections, etc.)
+    description: "",
+    tags: ["Branding", "Diseño de marca"],
+    hideMeta: true, // en la página del proyecto no se muestran año ni etiquetas
+    hideEyebrow: true, // ni la categoría arriba del título
+    image: "/projects/nicotech.jpg",
+    coverFit: "contain", // en la página del proyecto la portada se ve entera (no se recorta)
+    coverBg: "#011e2e", // color de fondo de la portada, para que el borde quede parejo
+    video: null,
+    clips: [],
+    gallery: [],
+    content: [],
+    link: null,
+    photoCredit: null,
+    featured: true,
+  },
+  {
+    slug: "kiosco-de-barrio",
+    title: "Kiosco de barrio",
+    category: "diseño",
+    year: 2026,
+    // igual que Nicotech: por ahora la página muestra solo título y portada
+    description: "",
+    tags: ["Branding", "Diseño de marca"],
+    hideMeta: true,
+    hideEyebrow: true,
+    image: "/projects/kiosco-de-barrio.jpg",
+    coverFit: "contain",
+    coverBg: "#000000",
+    video: null,
+    clips: [],
+    gallery: [],
+    content: [],
+    link: null,
+    photoCredit: null,
+    featured: true,
+  },
+  {
+    slug: "campanas-y-promociones",
+    title: "Campañas y promociones",
+    category: "diseño",
+    year: 2026,
+    // igual que Nicotech y Kiosco de barrio: por ahora la página muestra solo título y portada
+    description: "",
+    tags: ["Diseño gráfico"],
+    hideMeta: true,
+    hideEyebrow: true,
+    image: "/projects/campanas-y-promociones.jpg",
+    coverFit: "square", // en la página del proyecto la portada se ve entera, cuadrada y centrada
+    video: null,
+    clips: [],
+    gallery: [],
+    content: [],
+    link: null,
+    photoCredit: null,
+    featured: true,
+  },
+  {
     slug: "proyecto-motion-01",
     title: "Nombre del proyecto motion",
     category: "motion",
